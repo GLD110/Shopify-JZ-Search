@@ -16,7 +16,7 @@
 */
 if( ENVIRONMENT == 'development'){
   $config['base_url']  = 'http://localhost:9080/shopify-jz-search/';
-  $config['app_path']    = 'D:/www/Git/Shopify-JZ-search/';
+  $config['app_path']    = 'D:/www/Git/Shopify-JZ-Search/';
 }
 if( ENVIRONMENT == 'production'){
   $config['base_url']    = 'http://s626233805.websitehome.co.uk/app_butlerandhill';
@@ -388,7 +388,7 @@ $config['proxy_ips'] = '';
 $config['clean_days'] = '15';
 
 // APP Configuration
-$config['APP_NAME'] = 'JZ private app';
+$config['APP_NAME'] = 'Shopify JZ Search';
 $config['APP_CLIENT_ID'] = '60994f591856605015c21a53f010e5e4';          // API KEY
 $config['APP_CLIENT_SECRET'] = 'f6c9a35274c8fdbfa8e550da8058e36b';      // Credential
 $config['APP_SCOPE'] = 'read_products,write_products,read_orders,write_orders,read_fulfillments,write_fulfillments,read_shipping,write_shipping';
@@ -403,8 +403,8 @@ $config['APP_STATE'] = md5( $config['APP_REDIRECT_URL'] . $config['APP_NAME'] );
 // Private Mode
 $config['PUBLIC_MODE'] = false;
 $config['USE_REDIRECT'] = true;
-$config['PRIVATE_SHOP'] = 'https://jz-general-store.myshopify.com/';
-$config['PRIVATE_API_URL'] = 'https://c86513ebafb04406ab22bed6fc3a5492:3b414fda338ec0920fcf20c645210d5e@jz-general-store.myshopify.com/admin/';   //Dev Shop
+$config['PRIVATE_SHOP'] = 'jz-general-store.myshopify.com';
+$config['PRIVATE_API_URL'] = 'https://5ba183b19da0a4725e95bff518babf90:41b747791bbe86824ac37c16bc10c204@jz-general-store.myshopify.com/admin/';   //Dev Shop
 
 // Constants
 $config['CONST_EMPTY_DATE'] = '0000-00-00 00:00:00';
