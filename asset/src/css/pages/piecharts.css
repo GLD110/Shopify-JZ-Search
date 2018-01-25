@@ -1,0 +1,41 @@
+
+
+.demo-container {
+
+    width: 99%;
+    height: 350px;
+    padding: 0;
+    margin: 15px auto 0 auto;
+}
+
+.demo-placeholder {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    line-height: 1.2em;
+}
+
+.demo-placeholder1 {
+    height: 300px;
+}
+
+.legend table {
+    border-spacing: 5px;
+}
+.panel-primary > .panel-heading {
+    background-color: #fff;
+    border-color: #fff;
+}
+#pie1{
+    margin-left:55px;
+}
+#pie2{
+    margin-left:55px;
+}
+#pie4{
+    margin-left: 55px;
+}
+.panel.panel-primary > .panel-heading {
+    background-color: #418bca;
+    color: #fff;
+}

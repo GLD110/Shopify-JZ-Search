@@ -1,0 +1,211 @@
+/***
+Customized Bootstrap toastr
+***/
+
+.radio-list > label {
+    display: block;
+}
+
+label {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.radio,
+.checkbox {
+    display: block;
+    min-height: 0;
+    padding-left: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.checkbox-list > label {
+    display: block;
+}
+
+div.radio,
+div.checker {
+    margin-right: 0;
+    margin-left: 3px;
+}
+
+div.selector,
+div.checker,
+div.button,
+div.uploader {
+    display: -moz-inline-box;
+    display: inline-block;
+    zoom: 1;
+    vertical-align: middle;
+}
+
+.tabtop .nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+    border-top: 4px solid #f6bb42 !important;
+    border-right: 2px solid #ccc !important;
+    border-left: 2px solid #ccc !important;
+}
+
+.filterable {
+    margin-top: 0 !important;
+}
+
+.pagination {
+    margin-top: 0 !important;
+}
+
+.radio input[type=radio] {
+    margin-left: -40px !important;
+    margin-top: 1px;
+}
+
+.toastrshow {
+    margin-bottom: 7px;
+}
+
+.padding-right10 {
+    padding-right: 20px !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-shadow: none;
+}
+
+.toast {
+    background-color: #030303;
+}
+
+.toast-success {
+    background-color: #01BC8C !important;
+}
+
+.toast-error {
+    background-color: #EF6F6C !important;
+}
+
+.toast-info {
+    background-color: #67C5DF !important;
+}
+
+.toast-warning {
+    background-color: #F89A14 !important;
+}
+
+.i-am-new li,
+.noty_message,
+.noty_bar {
+    border-radius: 0 !important;
+}
+
+.form-group .checkbox label,
+.form-group .radio label,
+.form-group label {
+    font-size: 16px;
+    line-height: 1.42857143;
+    color: #333;
+    font-weight: 400;
+}
+
+.form-group.is-focused .checkbox label:hover {
+    color: #333;
+}
+
+.form-group.is-focused .checkbox label:focus {
+    color: #333;
+}
+
+.form-group.is-focused .checkbox label {
+    color: #333;
+}
+
+.noty_type_warning {
+    background-color: #F89A14;
+    border-color: #F89A14;
+}
+
+.noty_type_info {
+    background-color: #67C5DF;
+    border-color: #67C5Df;
+}
+
+.noty_type_error {
+    background-color: #ef6f6c;
+    border-color: #ef6f6c;
+}
+
+.noty_type_success {
+    background-color: #01bc8c;
+    border-color: #01bc8c;
+}
+
+.noty_type_alert {
+    background-color: #b7c2c7;
+}
+
+.noty_type_information {
+    background-color: #67c5df;
+}
+
+.toast_type {
+    margin-left: 11px;
+}
+
+.toast-position {
+    margin-left: 13px;
+}
+
+
+/*material toaster and snackbar*/
+
+.toast_label {
+    color: #777!important;
+    font-size: 16px;
+}
+
+.toast_material {
+    top: 30px;
+}
+
+.snackbar_toaster {
+    left: 15px;
+    margin: 25px;
+}
+
+.snackbar_toaster .snack_bar,
+.snackbar_toaster .toaster {
+    color: #777!important;
+}
+
+
+/*toast modals*/
+
+.snackbar.snackbar-opened {
+    background-color: #01bc8c!important;
+}
+
+
+/*material  content css*/
+
+.portlet.box > .material_list_body {
+    padding: 30px 10px;
+}
+
+.list-group .list-group-item {
+    height: 122px !important;
+}
+.btn-default:not(.btn-link):not(.btn-flat), .btn-default:not(.btn-link):not(.btn-flat):hover, .btn:not(.btn-raised):not(.btn-link):hover.btn-default {
+    margin-right: 10px;
+}
+.list-group .list-group-separator {
+    clear: both;
+    overflow: hidden;
+    margin-top: -20px;
+    margin-bottom: 10px;
+}

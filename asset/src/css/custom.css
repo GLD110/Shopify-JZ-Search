@@ -1,0 +1,50 @@
+.spinner.input-group .input-group-addon .spin-up, .spinner.input-group .input-group-addon .spin-down {
+    height: 10px !important;
+    width: 14px !important;
+}
+
+/*vector maps zoom in zoom out*/
+.jqvmap-zoomin, .jqvmap-zoomout {
+    width: 18px !important;
+    height: 19px !important;
+}
+.temp form{
+    cursor:move;
+}
+#components {
+    cursor: move;
+}
+.dropdown-menu>li>a{
+    cursor:pointer;
+    padding:3px 9px;
+}
+
+.form-horizontal .checkbox, .form-horizontal .radio {
+    min-height: 27px;
+}
+
+/* grid */
+.tab{
+    margin:0;
+}
+.dropdown-menu>li>a:hover{
+   background-color: #F5F5F5;
+    color: #262626;;
+}
+
+/*form builder*/
+.checkbox-inline+.checkbox-inline, .radio-inline+.radio-inline {
+    margin-top: 0;
+    margin-left: 0;
+}
+.resize_vertical {
+    resize: vertical;
+}
+/*.btn-default, .default {*/
+    /*background: #eee !important;*/
+    /*color: #777 !important;*/
+/*}*/
+/*.btn-default,.default:hover {*/
+    /*    background-color: #ddd !important;*/
+    /*    border-color: #A9B6B1;*/
+/*}*/

@@ -1,0 +1,15 @@
+
+
+body{
+    padding-top:0;
+    position:inherit;
+    padding-bottom:0;
+    overflow-y: hidden;
+}
+.nav>li>a{
+    padding:9px;
+}
+.form-horizontal .radio,.form-horizontal .checkbox {
+    min-height: 27px;
+     padding-left:0;
+}

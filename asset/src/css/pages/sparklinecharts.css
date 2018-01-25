@@ -1,0 +1,18 @@
+
+.spark-chart {
+    margin: 10px 0 10px 0;
+    padding: 10px 10px 10px 30px;
+    text-align: center;
+}
+
+.minichart-box {
+    color: #000;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.minichart-txt {
+    font-size: 11px;
+    text-align: center;
+    margin: 10px 0 0 15px;
+}

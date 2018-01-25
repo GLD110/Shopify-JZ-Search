@@ -1,0 +1,64 @@
+/* 
+    Document   : style
+    Created on : Jul 2, 2014, 11:54:57 AM
+    Author     : parih_000
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.footer{
+    
+    position: absolute;
+    margin: 0px;
+    width: 100%;
+    bottom: 1px;
+    height: 50px;
+    line-height: 50px;
+    background: #efefef;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+.conbre{margin-top: 54px;}
+
+.cus-icon img{height: 60px; width: 60px}
+
+.report-overlay{background:#efefef;  min-height: 300px; position: absolute; display: block;  width: 100%; height: 90%;top:51px;}
+.report-overlay-show{display: block}
+.report-overlay-hide{display: none}
+
+.navbar-cus{
+ 
+    border: 1px solid transparent;
+    margin-bottom: 0px;
+    min-height: 40px !important;
+    position: relative;
+
+}
+/*overwright select box*/
+.select2-container .select2-choice {
+    
+    height: 32px;
+    line-height: 32px;
+    min-width: 118px;
+    
+}
+.alert-cus{
+    height: 35px; line-height: 35px !important; margin-bottom: 16px; margin-top: -19px; padding-top: 6px; text-align: center;
+}
+
+.metro .table {
+    margin-bottom: 14pt;
+    width: 100%;
+}
+.metro table {
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border-spacing: 0;
+    max-width: 100%;
+}
+.table-heading{
+    display: block; font-size:33px; background: orange; color:#fff;padding:4px
+}
+.pagination {
+    display: inline !important;
+}

@@ -1,0 +1,35 @@
+.form-group.is-focused .form-control,
+.form-group.is-focused label.control-label {
+    background-image: linear-gradient(#fff, #fff), linear-gradient(#d2d2d2, #d2d2d2)!important;
+    color: #333 !important;
+}
+
+.multiselect-container>li>a>label.radio:hover,
+.multiselect-container>li>a>label.checkbox:hover {
+    background-color: #3c8dbc;
+}
+
+.multiselect-container>li>a>label.radio:active,
+.multiselect-container>li>a>label.checkbox:active {
+    background-color: #23527c;
+}
+
+
+/*selectize*/
+
+.selectize-control.multi .selectize-input>.item,
+.selectize-control.multi .selectize-input>div {
+    padding: 0px 10px;
+    background: #418BCa;
+    color: #fff;
+    border: 1px solid #418BCa;
+}
+
+.selectize-control.single .selectize-input
+{
+    padding-left: 10px;
+}
+
+.select2-selection--single {
+    height: 34px !important;
+}
