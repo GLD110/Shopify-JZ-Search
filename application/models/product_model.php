@@ -178,7 +178,6 @@ class Product_model extends Master_model
           return true;
       else
           return false;
-
     }
 
     // Get the variant object from variant_id
