@@ -49,7 +49,7 @@
                         <?php echo $sno;?>
                     </td>
                     <td>
-                        <a href="#" name="prefix" class="prefx" data-type="text" data-pk="<?= $row->id?>" data-url="<?php echo base_url( $this->config->item('index_page') . '/product/updateModel/prefix' ) ?>" data-title="Enter new Prefix"><?=$row->prefix ?></a>
+                        <a href="#" name="prefix" class="prefix" data-type="text" data-pk="<?= $row->id?>" data-url="<?php echo base_url( $this->config->item('index_page') . '/product/updateModel/prefix' ) ?>" data-title="Enter new Prefix"><?=$row->prefix ?></a>
                     </td>
 
                     <td>
@@ -114,10 +114,10 @@
                             </div>
                             <div class="tran-type">
                                 <label>Yes</label>
-                                    <input type="radio" value="1" name="is_active" style="display: inline">
+                                    <input type="radio" checked="checked" value="1" name="is_active" style="display: inline">
 
                                 <label>No</label>
-                                <input type="radio" checked="checked" value="0" name="is_active" style="display: inline">
+                                <input type="radio" value="0" name="is_active" style="display: inline">
 
 
                             </div>

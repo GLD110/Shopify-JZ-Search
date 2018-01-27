@@ -12,7 +12,9 @@ class Product extends MY_Controller {
     // Define the search values
     $this->_searchConf  = array(
       'name' => '',
-      'sku' => '',
+      'make' => '',
+      'model' => '',
+      'year' => '',
       'shop' => $this->_default_store,
       'page_size' => $this->config->item('PAGE_SIZE'),
       'sort_field' => 'product_id',
@@ -38,7 +40,9 @@ class Product extends MY_Controller {
     $this->Product_model->rewriteParam($this->_searchVal['shop']);
     $arrCondition =  array(
       'name' => $this->_searchVal['name'],
-      'sku' => $this->_searchVal['sku'],
+      'make' => $this->_searchVal['make'],
+      'model' => $this->_searchVal['model'],
+      'year' => $this->_searchVal['year'],
       'sort' => $this->_searchVal['sort_field'] . ' ' . $this->_searchVal['sort_direction'],
       'page_number' => $page,
       'page_size' => $this->_searchVal['page_size'],
@@ -51,6 +55,27 @@ class Product extends MY_Controller {
     $arr = array();
     foreach( $this->_arrStoreList as $shop => $row ) $arr[ $shop ] = $shop;
     $data['arrStoreList'] = $arr;
+
+    //Make List
+    $make_arr = array();
+    $temp_arr =  $this->Make_model->getList();
+    $temp_arr = $temp_arr->result();
+    foreach( $temp_arr as $make => $row ) $make_arr[ $make ] = $make;
+    $data['make_arr'] = $make_arr;
+
+    //Model List
+    $model_arr = array();
+    $temp_arr =  $this->Model_model->getList();
+    $temp_arr = $temp_arr->result();
+    foreach( $temp_arr as $model => $row ) $model_arr[ $model ] = $model;
+    $data['model_arr'] = $model_arr;
+
+    //Year List
+    $year_arr = array();
+    $temp_arr =  $this->Year_model->getList();
+    $temp_arr = $temp_arr->result();
+    foreach( $temp_arr as $year => $row ) $year_arr[ $year ] = $year;
+    $data['year_arr'] = $year_arr;        
 
     // Define the rendering data
     $data = $data + $this->setRenderData();
@@ -195,13 +220,12 @@ class Product extends MY_Controller {
   function updateMake( $key ){
     if($this->session->userdata('role') == 'admin'){
       $val = $this->input->post('value');
-      if( $key == 'prefix' )
-      $prefix =  $this->input->post('prefix');
+      $pk =  $this->input->post('pk');
       $data = array(
         $key => $val
       );
 
-      $this->Make_model->update( $prefix, $data );
+      $this->Make_model->update( $pk, $data );
     }
   }
 
@@ -267,13 +291,12 @@ class Product extends MY_Controller {
   function updateModel( $key ){
     if($this->session->userdata('role') == 'admin'){
       $val = $this->input->post('value');
-      if( $key == 'prefix' )
-      $prefix =  $this->input->post('prefix');
+      $pk =  $this->input->post('pk');
       $data = array(
         $key => $val
       );
 
-      $this->Model_model->update( $prefix, $data );
+      $this->Model_model->update( $pk, $data );
     }
   }
 
@@ -339,13 +362,12 @@ class Product extends MY_Controller {
   function updateYear( $key ){
     if($this->session->userdata('role') == 'admin'){
       $val = $this->input->post('value');
-      if( $key == 'prefix' )
-      $prefix =  $this->input->post('prefix');
+      $pk =  $this->input->post('pk');
       $data = array(
         $key => $val
       );
 
-      $this->Year_model->update( $prefix, $data );
+      $this->Year_model->update( $pk, $data );
     }
   }
 }
