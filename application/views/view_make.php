@@ -4,13 +4,13 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    SKU Prefix List
+    Make List
     <small>Manage</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="#">Products-SKUs</a></li>
-    <li class="active">SKU Prefix</li>
+    <li><a href="#">Products</a></li>
+    <li class="active">Make</li>
   </ol>
 </section>
 
@@ -20,11 +20,11 @@
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">SKU List</h3>
+          <h3 class="box-title">Make List</h3>
         </div><!-- /.box-header -->
         <div class="col-md-12 column"  style = "border-bottom:solid 1px #ddd; margin-bottom:4px; padding-bottom: 5px;" >
             <a id="modal-666931" href="#modal-container-666931" role="button" class="btn btn-default btn-sm" data-toggle="modal">
-                <i class="glyphicon glyphicon-plus"></i>&nbsp; Create new SKU Prefix
+                <i class="glyphicon glyphicon-plus"></i>&nbsp; Add new Make
             </a>&nbsp;
         </div>
         <div class="box-body">
@@ -32,7 +32,7 @@
             <thead>
                 <tr>
                     <th class = "text-center" >S. NO.</th>
-                    <th class = "text-center" >Prefix</th>
+                    <th class = "text-center" >Make</th>
                     <th class = "text-center" >Is Active</th>
                     <th class = "text-center" >Store</th>
                     <th class = "text-center" >Created</th>
@@ -42,25 +42,25 @@
             <tbody>
             <?php $sno = 1; ?>
                  <?php foreach ($query->result() as $row): ?>
-                
+
                 <tr class="tbl_view text-center" >
-                                    
+
                     <td>
                         <?php echo $sno;?>
                     </td>
                     <td>
-                        <a href="#" name="prefix" class="prefx" data-type="text" data-pk="<?= $row->id?>" data-url="<?php echo base_url( $this->config->item('index_page') . '/product/updateSku/prefix' ) ?>" data-title="Enter new Prefix"><?=$row->prefix ?></a>
+                        <a href="#" name="prefix" class="prefx" data-type="text" data-pk="<?= $row->id?>" data-url="<?php echo base_url( $this->config->item('index_page') . '/product/updateMake/prefix' ) ?>" data-title="Enter new Prefix"><?=$row->prefix ?></a>
                     </td>
 
                     <td>
-                        <a href="#" class="is_active" data-type="select" data-pk="<?= $row->id?>" data-url="<?php echo base_url( $this->config->item('index_page') . '/product/updateSku/is_active' ) ?>" data-title="Select status"><?php echo $row->is_active == '1' ? 'Active' : 'Inactive' ?></a>
+                        <a href="#" class="is_active" data-type="select" data-pk="<?= $row->id?>" data-url="<?php echo base_url( $this->config->item('index_page') . '/product/updateMake/is_active' ) ?>" data-title="Select status"><?php echo $row->is_active == '1' ? 'Active' : 'Inactive' ?></a>
                     </td>
                     <td>
-                        <a href="#" class="shop" data-type="select" data-pk="<?= $row->id?>" data-url="<?php echo base_url( $this->config->item('index_page') . '/product/updateSku/shop' ) ?>" data-title="Select Shop"><?PHP echo $row->shop; ?></a>
+                        <a href="#" class="shop" data-type="select" data-pk="<?= $row->id?>" data-url="<?php echo base_url( $this->config->item('index_page') . '/product/updateMake/shop' ) ?>" data-title="Select Shop"><?PHP echo $row->shop; ?></a>
                     </td>
 
                     <td>
-                        <?php 
+                        <?php
                             $created = strtotime($row->d_o_c);
                             echo date('F jS Y', $created );
                         ?>
@@ -81,8 +81,8 @@
     </div><!-- /.col -->
   </div><!-- /.row -->
 </section><!-- /.content -->
-        
-<form method="POST" id='delsku' action="<?php echo base_url( $this->config->item('index_page') . '/product/delSku' ) ?>" >
+
+<form method="POST" id='delmake' action="<?php echo base_url( $this->config->item('index_page') . '/product/delMake' ) ?>" >
     <input type="hidden" id = 'del_id' name="del_id" value=""/>
 </form>
 
@@ -96,44 +96,44 @@
 
             <div class="modal-body">
                 <div id='retAddTransaction'></div>
-                
-                <form class="form-horizontal cus-form" id="Add_transaction" method="POST" action="<?php echo base_url( $this->config->item('index_page') . '/product/createSku' ) ?>"  data-parsley-validate>
-                
+
+                <form class="form-horizontal cus-form" id="Add_transaction" method="POST" action="<?php echo base_url( $this->config->item('index_page') . '/product/createMake' ) ?>"  data-parsley-validate>
+
                     <table class="table table-bordered">
                     <tr>
                         <td colspan="2">
-                            <label>SKU Prefix</label>
+                            <label>Make</label>
                             <input type="text" name="prefix" id='prefix' class="form-control input-group-sm" required/>
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td>
                             <div>
-                            <label>Is Active</label>  
+                            <label>Is Active</label>
                             </div>
                             <div class="tran-type">
                                 <label>Yes</label>
                                     <input type="radio" value="1" name="is_active" style="display: inline">
-                                
+
                                 <label>No</label>
                                 <input type="radio" checked="checked" value="0" name="is_active" style="display: inline">
-                                
-                            
+
+
                             </div>
                         </td>
                     </tr>
                     </table>
                     <div style="padding-left: 10px; padding-bottom: 10px; margin-top: -8px;">
                         <button type="submit" name="submit" class="btn btn-success">Submit</button>
-                        <button id="cancle" name="cancle" class="btn btn-warning" data-dismiss="modal" aria-hidden="true">Cancel</button>                
+                        <button id="cancle" name="cancle" class="btn btn-warning" data-dismiss="modal" aria-hidden="true">Cancel</button>
                     </div>
-                
+
                 </form>
             </div>
 
         </div>
-        
+
     </div>
 
 </div>
@@ -155,17 +155,17 @@ $(document).ready(function (){
          source: [
             {value: 1, text: 'Active'},
             {value: 0, text: 'Inactive'}
-            
+
         ]
-    }); 
-        
+    });
+
     // ********** Delete Action ********** //
     $(".btn_delete").on('click', function (e){
 ;       //e.preventDefault();
         console.log('dele');
         $('#del_id').val( $(this).attr( 'del_id' ) );
         $('.confirmLink').trigger('click'); return false;
-    });    
+    });
 
     $("#dialog").dialog({
         autoOpen: false,
@@ -181,7 +181,7 @@ $(document).ready(function (){
             buttons : {
             "Confirm" : function() {
                 $(this).dialog("close");
-                $("#delsku").submit();
+                $("#delmake").submit();
             },
             "Cancel" : function() {
                 $(this).dialog("close");
@@ -192,9 +192,9 @@ $(document).ready(function (){
 
         $("#dialog").dialog("open");
     });
-    
+
     // ********************************* //
-    
+
     $( "#Add_transaction" ).submit(function( event ) {
        var url = $(this).attr('action');
             $.ajax({

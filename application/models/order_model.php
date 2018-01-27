@@ -3,12 +3,12 @@ class Order_model extends Master_model
 {
     protected $_tablename = 'orderlist';
     private $_total_count = 0;
-    private $_map_property = array( 
-      'House number/name and street', 
-      'Postcode', 
-      'Year', 
-      'Message', 
-      'Map Address', 
+    private $_map_property = array(
+      'House number/name and street',
+      'Postcode',
+      'Year',
+      'Message',
+      'Map Address',
       'Times',
       'custom address',
       'custom city',
@@ -21,7 +21,7 @@ class Order_model extends Master_model
 
     public function getTotalCount(){ return $this->_total_count; }
     public function getMapProperties(){ return $this->_map_property; }
-    
+
     public function checkMapProduct( $properties )
     {
       $return = false;
@@ -31,13 +31,13 @@ class Order_model extends Master_model
         $return = true; // If there is any property, we consider it as Map Product : 2017.05.12 : By Jubin Ri
         if( in_array($item->name, $this->_map_property ) ){
           $return = true;
-          break;       
+          break;
         }
       }
-      
+
       return $return;
     }
-    
+
     /**
     * Get the list of product/ varints
     * array(
@@ -83,29 +83,29 @@ class Order_model extends Master_model
 
             if(sizeof($name_list) > 0){
 
-                $names_line = '';    
+                $names_line = '';
                 foreach($name_list as $obj)
                 {
                     $names_line = $names_line . "order_name = '" . str_replace( "'", "\\'", $obj->order_name ) . "'" . " OR ";
-                }    
+                }
                 //remove last 'OR'
                 $names_line = substr($names_line, 0, (strlen($names_line) - 4));
                 $names_line = '(' . $names_line . ')';
 
                 $where[ $names_line ] = '';
-            }       
+            }
 
 
             foreach( $where as $key => $val )
             if( $val == '' )
                 $this->db->where( $key );
             else
-                $this->db->where( $key, $val );        
+                $this->db->where( $key, $val );
 
             $this->db->where ( 'fulfillment_status', 'fulfilled');
             $this->db->where ( 'exported_status', '0');
             $query = $this->db->get( $this->_tablename );
-            
+
             return $query;
         }
         else{
@@ -113,68 +113,68 @@ class Order_model extends Master_model
             return $this->db->get( $this->_tablename );
         }
     }
-    
+
     public function getOrderNameList($arrCondition)
     {
         $where = array();
 
         // Build the where clause
-        
+
         $originalDate = $arrCondition['created_at'];
         $arrCondition['created_at'] = date("Y-m-d", strtotime($originalDate));
-        
+
         $where['shop'] = $this->_shop;
         if( !empty( $arrCondition['customer_name'] ) ) $where["customer_name LIKE '%" . str_replace( "'", "\\'", $arrCondition['customer_name'] ) . "%'"] = '';
         if( !empty( $arrCondition['order_name'] ) ) $where["order_name LIKE '%" . str_replace( "'", "\\'", $arrCondition['order_name'] ) . "%'"] = '';
         if( !empty( $arrCondition['created_at'] ) ) $where["created_at LIKE '" . str_replace( "'", "\\'", $arrCondition['created_at'] ) . "%'"] = '';
-        
+
         //Get prefix from sku
-        $this->db->select ( 'prefix' ); 
-        $this->db->from ( 'sku');
+        $this->db->select ( 'prefix' );
+        $this->db->from ( 'make');
         $this->db->where ( 'shop', $this->_shop);
         $query = $this->db->get ();
         $prefix_array = $query->result ();
-        
+
         if(sizeof($prefix_array) > 0){
-            
-            $prefix_line = '';    
+
+            $prefix_line = '';
             foreach($prefix_array as $obj)
             {
                 $prefix_line = $prefix_line . "sku LIKE '" . str_replace( "'", "\\'", $obj->prefix ) . "%'" . " OR ";
-            }    
+            }
             //remove last 'OR'
             $prefix_line = substr($prefix_line, 0, (strlen($prefix_line) - 4));
             $prefix_line = '(' . $prefix_line . ')';
-            
+
             $where[ $prefix_line ] = '';
         }
-        
+
         // Select fields
         $this->db->distinct();
         $select = "order_name";
-        $this->db->select( $select );  
+        $this->db->select( $select );
 
         foreach( $where as $key => $val )
         if( $val == '' )
             $this->db->where( $key );
         else
-            $this->db->where( $key, $val );     
-        
+            $this->db->where( $key, $val );
+
         $this->db->where ( 'fulfillment_status', 'fulfilled');
         $this->db->where ( 'exported_status', '0');
         $query = $this->db->get( $this->_tablename );
-        
-        return $query->result();        
+
+        return $query->result();
     }
-    
+
     public function setExported($result)
     {
         foreach($result as $line){
             $this->db->where('order_id', $line->order_id);
-            $this->db->update( $this->_tablename, array('exported_status' => '1'));        
+            $this->db->update( $this->_tablename, array('exported_status' => '1'));
         }
     }
-    
+
     public function getFileList()
     {
         $this->db->select( 'COUNT(id) AS cnt, file_no, down_date');
@@ -182,49 +182,49 @@ class Order_model extends Master_model
         $this->db->where( 'shop', $this->_shop );
         $this->db->order_by( 'file_no DESC' );
         $this->db->group_by( 'file_no');
-        
+
         return $this->db->get( $this->_tablename );
     }
-    
+
     public function getNewFileNo()
     {
         $return = 0;
         $query = $this->getFileList();
-        
+
         if( $query->num_rows() > 0 )
         foreach( $query->result() as $row )
         if( $row->file_no > $return ) $return = $row->file_no;
-        
+
         return $return + 1;
     }
-    
+
     // Get the lastest order date
     public function getLastOrderDate()
     {
         $return = '';
-        
+
         $this->db->select( 'created_at' );
         $this->db->order_by( 'created_at DESC' );
         $this->db->limit( 1 );
         $this->db->where( 'shop', $this->_shop );
-        
+
         $query = $this->db->get( $this->_tablename );
-        
+
         if( $query->num_rows() > 0 )
         {
             $res = $query->result();
-            
+
             $return = $res[0]->created_at;
         }
-        
+
         return $return;
     }
-    
+
     /**
     * Add order and check whether it's exist already
-    * 
+    *
     * @param mixed $order
-    */    
+    */
     public function add( $order )
     {
         // Check the order is exist already
@@ -256,7 +256,7 @@ class Order_model extends Master_model
                     'sku' => $line_item->sku,
                     'exported_status' => 0
                 );
-                
+
                 $query = parent::getList('order_id = \'' . $line_item->id . '\'' );
                 if($query->num_rows() == 0){
                     parent::add( $data );
@@ -299,7 +299,7 @@ class Order_model extends Master_model
                     'sku' => $line_item->sku,
                     'exported_status' => 0
                 );
-                
+
                 $query = parent::getList('order_id = \'' . $line_item->id . '\'' );
                 if($query->num_rows() == 0){
                     parent::add( $data );
@@ -308,25 +308,25 @@ class Order_model extends Master_model
 
             return true;
         }
-    }    
-    
+    }
+
     /**
     * Clear the download record
-    * 
+    *
     * @param mixed $file_no
     */
     public function clear( $file_no )
     {
         $this->db->where( 'file_no', $file_no );
         $this->db->where( 'shop', $this->_shop );
-        
+
         $data = array(
             'file_no' => 0,
         );
-        
+
         $this->db->update( $this->_tablename, $data );
     }
-    
+
     // ********************** //
-}  
+}
 ?>

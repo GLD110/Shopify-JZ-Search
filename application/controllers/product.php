@@ -5,7 +5,9 @@ class Product extends MY_Controller {
   public function __construct() {
     parent::__construct();
     $this->load->model( 'Product_model' );
-    $this->load->model( 'Sku_model' );
+    $this->load->model( 'Make_model' );
+    $this->load->model( 'Model_model' );
+    $this->load->model( 'Year_model' );
 
     // Define the search values
     $this->_searchConf  = array(
@@ -131,24 +133,24 @@ class Product extends MY_Controller {
       echo $page . '_' . $count;
   }
 
-  function manageSku(){
+  function manageMake(){
       // Check the login
       $this->is_logged_in();
 
       if($this->session->userdata('role') == 'admin'){
-          $data['query'] =  $this->Sku_model->getList();
+          $data['query'] =  $this->Make_model->getList();
           $data['arrStoreList'] =  $this->_arrStoreList;
 
           $this->load->view('view_header');
-          $this->load->view('view_sku', $data);
+          $this->load->view('view_make', $data);
           $this->load->view('view_footer');
       }
   }
 
-  function delSku(){
+  function delMake(){
       if($this->session->userdata('role') == 'admin'){
           $id = $this->input->get_post('del_id');
-          $returnDelete = $this->Sku_model->delete( $id );
+          $returnDelete = $this->Make_model->delete( $id );
           if( $returnDelete === true ){
               $this->session->set_flashdata('falsh', '<p class="alert alert-success">One item deleted successfully</p>');
           }
@@ -159,11 +161,11 @@ class Product extends MY_Controller {
       else{
           $this->session->set_flashdata('falsh', '<p class="alert alert-danger">Sorry! You have no rights to deltete</p>');
       }
-      redirect('product/manageSku');
+      redirect('product/manageMake');
       exit;
   }
 
-  function createSku(){
+  function createMake(){
      if($this->session->userdata('role') == 'admin'){
       $this->form_validation->set_rules('prefix', 'Prefix', 'callback_prefix_check');
       //$this->form_validation->set_rules('password', 'Password', 'required|matches[cpassword]');
@@ -173,9 +175,9 @@ class Product extends MY_Controller {
           exit;
       }
       else{
-            if($this->Sku_model->createSku()){
-                echo '<div class="alert alert-success">This sku created successfully</div>';
-                //redirect('product/manageSku');
+            if($this->Make_model->createMake()){
+                echo '<div class="alert alert-success">This make created successfully</div>';
+                //redirect('product/manageMake');
                 exit;
             }
             else{
@@ -185,12 +187,12 @@ class Product extends MY_Controller {
           }
      }
      else{
-         echo '<div class="alert alert-danger">Invalid sku</div>';
+         echo '<div class="alert alert-danger">Invalid make</div>';
          exit;
      }
   }
 
-  function updateSku( $key ){
+  function updateMake( $key ){
     if($this->session->userdata('role') == 'admin'){
       $val = $this->input->post('value');
       if( $key == 'prefix' )
@@ -199,7 +201,151 @@ class Product extends MY_Controller {
         $key => $val
       );
 
-      $this->Sku_model->update( $prefix, $data );
+      $this->Make_model->update( $prefix, $data );
+    }
+  }
+
+  function manageModel(){
+      // Check the login
+      $this->is_logged_in();
+
+      if($this->session->userdata('role') == 'admin'){
+          $data['query'] =  $this->Model_model->getList();
+          $data['arrStoreList'] =  $this->_arrStoreList;
+
+          $this->load->view('view_header');
+          $this->load->view('view_model', $data);
+          $this->load->view('view_footer');
+      }
+  }
+
+  function delModel(){
+      if($this->session->userdata('role') == 'admin'){
+          $id = $this->input->get_post('del_id');
+          $returnDelete = $this->Model_model->delete( $id );
+          if( $returnDelete === true ){
+              $this->session->set_flashdata('falsh', '<p class="alert alert-success">One item deleted successfully</p>');
+          }
+          else{
+              $this->session->set_flashdata('falsh', '<p class="alert alert-danger">Sorry! deleted unsuccessfully : ' . $returnDelete . '</p>');
+          }
+      }
+      else{
+          $this->session->set_flashdata('falsh', '<p class="alert alert-danger">Sorry! You have no rights to deltete</p>');
+      }
+      redirect('product/manageModel');
+      exit;
+  }
+
+  function createModel(){
+     if($this->session->userdata('role') == 'admin'){
+      $this->form_validation->set_rules('prefix', 'Prefix', 'callback_prefix_check');
+      //$this->form_validation->set_rules('password', 'Password', 'required|matches[cpassword]');
+
+      if ($this->form_validation->run() == FALSE){
+          echo validation_errors('<div class="alert alert-danger">', '</div>');
+          exit;
+      }
+      else{
+            if($this->Model_model->createModel()){
+                echo '<div class="alert alert-success">This model created successfully</div>';
+                //redirect('product/manageModel');
+                exit;
+            }
+            else{
+                echo '<div class="alert alert-danger">Sorry ! something went wrong </div>';
+                exit;
+            }
+          }
+     }
+     else{
+         echo '<div class="alert alert-danger">Invalid model</div>';
+         exit;
+     }
+  }
+
+  function updateModel( $key ){
+    if($this->session->userdata('role') == 'admin'){
+      $val = $this->input->post('value');
+      if( $key == 'prefix' )
+      $prefix =  $this->input->post('prefix');
+      $data = array(
+        $key => $val
+      );
+
+      $this->Model_model->update( $prefix, $data );
+    }
+  }
+
+  function manageYear(){
+      // Check the login
+      $this->is_logged_in();
+
+      if($this->session->userdata('role') == 'admin'){
+          $data['query'] =  $this->Year_model->getList();
+          $data['arrStoreList'] =  $this->_arrStoreList;
+
+          $this->load->view('view_header');
+          $this->load->view('view_year', $data);
+          $this->load->view('view_footer');
+      }
+  }
+
+  function delYear(){
+      if($this->session->userdata('role') == 'admin'){
+          $id = $this->input->get_post('del_id');
+          $returnDelete = $this->Year_model->delete( $id );
+          if( $returnDelete === true ){
+              $this->session->set_flashdata('falsh', '<p class="alert alert-success">One item deleted successfully</p>');
+          }
+          else{
+              $this->session->set_flashdata('falsh', '<p class="alert alert-danger">Sorry! deleted unsuccessfully : ' . $returnDelete . '</p>');
+          }
+      }
+      else{
+          $this->session->set_flashdata('falsh', '<p class="alert alert-danger">Sorry! You have no rights to deltete</p>');
+      }
+      redirect('product/manageYear');
+      exit;
+  }
+
+  function createYear(){
+     if($this->session->userdata('role') == 'admin'){
+      $this->form_validation->set_rules('prefix', 'Prefix', 'callback_prefix_check');
+      //$this->form_validation->set_rules('password', 'Password', 'required|matches[cpassword]');
+
+      if ($this->form_validation->run() == FALSE){
+          echo validation_errors('<div class="alert alert-danger">', '</div>');
+          exit;
+      }
+      else{
+            if($this->Year_model->createYear()){
+                echo '<div class="alert alert-success">This year created successfully</div>';
+                //redirect('product/manageYear');
+                exit;
+            }
+            else{
+                echo '<div class="alert alert-danger">Sorry ! something went wrong </div>';
+                exit;
+            }
+          }
+     }
+     else{
+         echo '<div class="alert alert-danger">Invalid year</div>';
+         exit;
+     }
+  }
+
+  function updateYear( $key ){
+    if($this->session->userdata('role') == 'admin'){
+      $val = $this->input->post('value');
+      if( $key == 'prefix' )
+      $prefix =  $this->input->post('prefix');
+      $data = array(
+        $key => $val
+      );
+
+      $this->Year_model->update( $prefix, $data );
     }
   }
 }
