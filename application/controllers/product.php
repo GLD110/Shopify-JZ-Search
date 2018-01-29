@@ -40,13 +40,14 @@ class Product extends MY_Controller {
     $this->Product_model->rewriteParam($this->_searchVal['shop']);
     $arrCondition =  array(
       'name' => $this->_searchVal['name'],
-      'make' => $this->_searchVal['make'],
-      'model' => $this->_searchVal['model'],
-      'year' => $this->_searchVal['year'],
+      'make' => trim(preg_replace('/\s+/', ' ', $this->_searchVal['make'])),
+      'model' => trim(preg_replace('/\s+/', ' ', $this->_searchVal['model'])),
+      'year' => trim(preg_replace('/\s+/', ' ', $this->_searchVal['year'])),
       'sort' => $this->_searchVal['sort_field'] . ' ' . $this->_searchVal['sort_direction'],
       'page_number' => $page,
       'page_size' => $this->_searchVal['page_size'],
     );
+
     $data['query'] =  $this->Product_model->getList( $arrCondition );
     $data['total_count'] = $this->Product_model->getTotalCount();
     $data['page'] = $page;
@@ -58,24 +59,27 @@ class Product extends MY_Controller {
 
     //Make List
     $make_arr = array();
+    $make_arr[''] = '';
     $temp_arr =  $this->Make_model->getList();
     $temp_arr = $temp_arr->result();
-    foreach( $temp_arr as $make => $row ) $make_arr[ $make ] = $make;
+    foreach( $temp_arr as $make ) $make_arr[ $make->prefix ] = $make->prefix;
     $data['make_arr'] = $make_arr;
 
     //Model List
     $model_arr = array();
+    $model_arr[''] = '';
     $temp_arr =  $this->Model_model->getList();
     $temp_arr = $temp_arr->result();
-    foreach( $temp_arr as $model => $row ) $model_arr[ $model ] = $model;
+    foreach( $temp_arr as $model ) $model_arr[ $model->prefix ] = $model->prefix;
     $data['model_arr'] = $model_arr;
 
     //Year List
     $year_arr = array();
+    $year_arr[''] = '';
     $temp_arr =  $this->Year_model->getList();
     $temp_arr = $temp_arr->result();
-    foreach( $temp_arr as $year => $row ) $year_arr[ $year ] = $year;
-    $data['year_arr'] = $year_arr;        
+    foreach( $temp_arr as $year ) $year_arr[ $year->prefix ] = $year->prefix;
+    $data['year_arr'] = $year_arr;
 
     // Define the rendering data
     $data = $data + $this->setRenderData();
@@ -156,6 +160,11 @@ class Product extends MY_Controller {
       echo 'success';
     else
       echo $page . '_' . $count;
+  }
+
+  function get_MMY(){
+    header("Content-Type: application/json", true);
+    echo json_encode(array('I'=>'1', 'You'=>'2'));
   }
 
   function manageMake(){

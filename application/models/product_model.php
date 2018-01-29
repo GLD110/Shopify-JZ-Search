@@ -45,8 +45,12 @@ class Product_model extends Master_model
 
         // Build the where clause
         if( !empty( $arrCondition['name'] ) ) $where["title LIKE '%" . str_replace( "'", "\\'", $arrCondition['name'] ) . "%'"] = '';
-        if( !empty( $arrCondition['sku'] ) ) $where["sku LIKE '%" . str_replace( "'", "\\'", $arrCondition['sku'] ) . "%'"] = '';
+        if( !empty( $arrCondition['make'] ) ) $where["tags LIKE '%" . str_replace( "'", "\\'", $arrCondition['make'] ) . "%'"] = '';
+        if( !empty( $arrCondition['model'] ) ) $where["tags LIKE '%" . str_replace( "'", "\\'", $arrCondition['model'] ) . "%'"] = '';
+        if( !empty( $arrCondition['year'] ) ) $where["tags LIKE '%" . str_replace( "'", "\\'", $arrCondition['year'] ) . "%'"] = '';
         if( !empty( $arrCondition['variant_id'] ) ) $where['variant_id'] = $arrCondition['variant_id'];
+
+        //var_dump($arrCondition );exit;
 
         // Product only - Group by, Get total records
         if( isset( $arrCondition['page_number'] ) )

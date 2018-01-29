@@ -58,13 +58,13 @@ tr.warning td.new-date{ font-weight:bold; color:green; }
                 <?PHP echo form_dropdown('sel_shop', $arrStoreList, $sel_shop, 'id="sel_shop" class="form-control input-group-sm"' ); ?>
                 &nbsp;&nbsp;&nbsp;
                 <label>Make</label>&nbsp;:&nbsp;
-                <?PHP echo form_dropdown('sel_make', array( 30 => 30, 50 => 50, 70 => 70, 100 => 100 ), $sel_make, 'id="sel_make" class="form-control input-group-sm"' ); ?>
+                <?PHP echo form_dropdown('sel_make', $make_arr, $sel_make, 'id="sel_make" class="form-control input-group-sm"' ); ?>
                 &nbsp;&nbsp;&nbsp;
                 <label>Model</label>&nbsp;:&nbsp;
-                <?PHP echo form_dropdown('sel_model', array( 30 => 30, 50 => 50, 70 => 70, 100 => 100 ), $sel_model, 'id="sel_model" class="form-control input-group-sm"' ); ?>
+                <?PHP echo form_dropdown('sel_model', $model_arr, $sel_model, 'id="sel_model" class="form-control input-group-sm" disabled' ); ?>
                 &nbsp;&nbsp;&nbsp;
                 <label>Year</label>&nbsp;:&nbsp;
-                <?PHP echo form_dropdown('sel_year', array( 30 => 30, 50 => 50, 70 => 70, 100 => 100 ), $sel_year, 'id="sel_year" class="form-control input-group-sm"' ); ?>
+                <?PHP echo form_dropdown('sel_year', $year_arr, $sel_year, 'id="sel_year" class="form-control input-group-sm" disabled' ); ?>
                 &nbsp;&nbsp;&nbsp;
                 <label>Product Name</label>&nbsp;:&nbsp;
                 <input type = 'text' class="form-control input-group-sm" id = 'sel_name' name = 'sel_name' value = "<?PHP echo $sel_name; ?>" style = "width:150px;" >
@@ -216,6 +216,29 @@ $(document).ready(function(){
     });
   }
 });
+
+$('#sel_make').change(function(){
+  funcSyncMMY();
+});
+
+var funcSyncMMY = function(){
+
+    var make = $('select[name="sel_make"] option:selected').val();
+    var model = $('select[name="sel_model"] option:selected').val();
+    var year = $('select[name="sel_year"] option:selected').val();
+
+    $.ajax({
+        type: "POST",
+        url: "<?php echo base_url($this->config->item('index_page') . '/product/get_MMY') ?>",
+        data: { make: make, model: model, year: year },
+        dataType: "json", // Set the data type so jQuery can parse it for you
+        success: function (data) {
+            var customr_name = data['I'];
+            var country = data['You'];
+            console.log(customr_name);
+        }
+    });
+}
 
 function sort( field )
 {

@@ -13,7 +13,7 @@ class Make_model extends Master_model
     */
     public function getList()
     {
-        $sql = 'SELECT * FROM ' . $this->_tablename;
+        $sql = 'SELECT * FROM ' . $this->_tablename . ' ORDER BY `prefix` ASC ';
 
         $query = $this->db->query($sql);
 
