@@ -247,7 +247,7 @@ class Product extends MY_Controller {
       echo json_encode($model_arr);
     }
 
-    if( isset( $_POST[ "model" ] ) ){
+    if( isset( $_POST[ "model" ] ) && !(isset( $_POST[ "year" ] ))){
       $arrCondition =  array(
         'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
         'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ])),
@@ -272,6 +272,21 @@ class Product extends MY_Controller {
         }
       }
       echo json_encode($year_arr);
+    }
+
+    if( isset( $_POST[ "year" ] ) ){
+      $arrCondition =  array(
+        'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
+        'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ])),
+        'model' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "model" ])),
+        'year' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "year" ])),
+      );
+
+      // Get data
+      $temp =  $this->Product_model->getList( $arrCondition );
+      $product_list = $temp->result();
+
+      echo json_encode($product_list);
     }
   }
 
