@@ -61,10 +61,10 @@ tr.warning td.new-date{ font-weight:bold; color:green; }
                 <?PHP echo form_dropdown('sel_make', $make_arr, $sel_make, 'id="sel_make" class="form-control input-group-sm"' ); ?>
                 &nbsp;&nbsp;&nbsp;
                 <label>Model</label>&nbsp;:&nbsp;
-                <?PHP echo form_dropdown('sel_model', $model_arr, $sel_model, 'id="sel_model" class="form-control input-group-sm" disabled' ); ?>
+                <?PHP echo form_dropdown('sel_model', $model_arr, $sel_model, 'id="sel_model" class="form-control input-group-sm"' ); ?>
                 &nbsp;&nbsp;&nbsp;
                 <label>Year</label>&nbsp;:&nbsp;
-                <?PHP echo form_dropdown('sel_year', $year_arr, $sel_year, 'id="sel_year" class="form-control input-group-sm" disabled' ); ?>
+                <?PHP echo form_dropdown('sel_year', $year_arr, $sel_year, 'id="sel_year" class="form-control input-group-sm"' ); ?>
                 &nbsp;&nbsp;&nbsp;
                 <label>Product Name</label>&nbsp;:&nbsp;
                 <input type = 'text' class="form-control input-group-sm" id = 'sel_name' name = 'sel_name' value = "<?PHP echo $sel_name; ?>" style = "width:150px;" >
@@ -218,11 +218,16 @@ $(document).ready(function(){
 });
 
 $('#sel_make').change(function(){
-  funcSyncMMY();
+  funcSyncMMY_Model();
 });
 
-var funcSyncMMY = function(){
+$('#sel_model').change(function(){
+  funcSyncMMY_Year();
+});
 
+var funcSyncMMY_Model = function(){
+
+    var shop = $('select[name="sel_shop"] option:selected').val();
     var make = $('select[name="sel_make"] option:selected').val();
     var model = $('select[name="sel_model"] option:selected').val();
     var year = $('select[name="sel_year"] option:selected').val();
@@ -230,12 +235,40 @@ var funcSyncMMY = function(){
     $.ajax({
         type: "POST",
         url: "<?php echo base_url($this->config->item('index_page') . '/product/get_MMY') ?>",
-        data: { make: make, model: model, year: year },
+        data: { shop: shop, make: make},
         dataType: "json", // Set the data type so jQuery can parse it for you
         success: function (data) {
-            var customr_name = data['I'];
-            var country = data['You'];
-            console.log(customr_name);
+            console.log(data);
+
+              $("#sel_model").html('');
+              $.each(data,function(key,value){
+                  $("#sel_model").append('<option value=' + key + '>' + value + '</option>');
+              });
+              $("#sel_model").attr('disabled', false);
+        }
+    });
+}
+
+var funcSyncMMY_Year = function(){
+
+    var shop = $('select[name="sel_shop"] option:selected').val();
+    var make = $('select[name="sel_make"] option:selected').val();
+    var model = $('select[name="sel_model"] option:selected').val();
+    var year = $('select[name="sel_year"] option:selected').val();
+
+    $.ajax({
+        type: "POST",
+        url: "<?php echo base_url($this->config->item('index_page') . '/product/get_MMY') ?>",
+        data: { shop: shop, make: make, model: model},
+        dataType: "json", // Set the data type so jQuery can parse it for you
+        success: function (data) {
+            console.log(data);
+
+              $("#sel_year").html('');
+              $.each(data,function(key,value){
+                  $("#sel_year").append('<option value=' + key + '>' + value + '</option>');
+              });
+              $("#sel_year").attr('disabled', false);
         }
     });
 }

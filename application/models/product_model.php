@@ -45,9 +45,27 @@ class Product_model extends Master_model
 
         // Build the where clause
         if( !empty( $arrCondition['name'] ) ) $where["title LIKE '%" . str_replace( "'", "\\'", $arrCondition['name'] ) . "%'"] = '';
-        if( !empty( $arrCondition['make'] ) ) $where["tags LIKE '%" . str_replace( "'", "\\'", $arrCondition['make'] ) . "%'"] = '';
-        if( !empty( $arrCondition['model'] ) ) $where["tags LIKE '%" . str_replace( "'", "\\'", $arrCondition['model'] ) . "%'"] = '';
-        if( !empty( $arrCondition['year'] ) ) $where["tags LIKE '%" . str_replace( "'", "\\'", $arrCondition['year'] ) . "%'"] = '';
+        if( !empty( $arrCondition['make'] ) ) {
+          $this->db->where( 'id', $arrCondition['make'] );
+          $query = $this->db->get( 'make' );
+          $result = $query->result();
+
+          $where["tags LIKE '%" . preg_replace('/\s\s+/', '', $result[0]->prefix ) . "%'"] = '';
+        }
+        if( !empty( $arrCondition['model'] ) ) {
+          $this->db->where( 'id', $arrCondition['model'] );
+          $query = $this->db->get( 'model' );
+          $result = $query->result();
+          
+          $where["tags LIKE '%" . preg_replace('/\s\s+/', '', $result[0]->prefix ) . "%'"] = '';
+        }
+        if( !empty( $arrCondition['year'] ) ) {
+          $this->db->where( 'id', $arrCondition['year'] );
+          $query = $this->db->get( 'year' );
+          $result = $query->result();
+
+          $where["tags LIKE '%" . preg_replace('/\s\s+/', '', $result[0]->prefix ) . "%'"] = '';
+        }
         if( !empty( $arrCondition['variant_id'] ) ) $where['variant_id'] = $arrCondition['variant_id'];
 
         //var_dump($arrCondition );exit;
@@ -75,6 +93,8 @@ class Product_model extends Master_model
             $page_size = isset( $arrCondition['page_size'] ) ? $arrCondition['page_size'] : $this->config->item('PAGE_SIZE');
             $this->db->limit( $page_size, $arrCondition['page_number'] );
         }
+
+        //var_dump($arrCondition['make']);exit;
 
         foreach( $where as $key => $val )
         if( $val == '' )

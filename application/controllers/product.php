@@ -40,13 +40,15 @@ class Product extends MY_Controller {
     $this->Product_model->rewriteParam($this->_searchVal['shop']);
     $arrCondition =  array(
       'name' => $this->_searchVal['name'],
-      'make' => trim(preg_replace('/\s+/', ' ', $this->_searchVal['make'])),
-      'model' => trim(preg_replace('/\s+/', ' ', $this->_searchVal['model'])),
-      'year' => trim(preg_replace('/\s+/', ' ', $this->_searchVal['year'])),
+      'make' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['make'])),
+      'model' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['model'])),
+      'year' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['year'])),
       'sort' => $this->_searchVal['sort_field'] . ' ' . $this->_searchVal['sort_direction'],
       'page_number' => $page,
       'page_size' => $this->_searchVal['page_size'],
     );
+
+    //var_dump($this->_searchVal['model']);exit;
 
     $data['query'] =  $this->Product_model->getList( $arrCondition );
     $data['total_count'] = $this->Product_model->getTotalCount();
@@ -59,26 +61,63 @@ class Product extends MY_Controller {
 
     //Make List
     $make_arr = array();
-    $make_arr[''] = '';
+    $make_arr[0] = '';
     $temp_arr =  $this->Make_model->getList();
     $temp_arr = $temp_arr->result();
-    foreach( $temp_arr as $make ) $make_arr[ $make->prefix ] = $make->prefix;
+    foreach( $temp_arr as $make ) $make_arr[ $make->id ] = $make->prefix;
     $data['make_arr'] = $make_arr;
 
-    //Model List
+    $arrCondition2 =  array(
+      'name' => $this->_searchVal['name'],
+      'make' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['make']))
+    );
+
+    // Get data
+    $temp =  $this->Product_model->getList( $arrCondition2 );
+    $product_list = $temp->result();
+
+    //model List
     $model_arr = array();
-    $model_arr[''] = '';
+    $model_arr[0] = '';
     $temp_arr =  $this->Model_model->getList();
     $temp_arr = $temp_arr->result();
-    foreach( $temp_arr as $model ) $model_arr[ $model->prefix ] = $model->prefix;
+
+    foreach( $temp_arr as $model ) {
+      foreach($product_list as $product){
+        $model_s = trim(preg_replace('/\s\s+/', ' ', $model->prefix));
+        if(strpos($product->tags, $model_s))
+          $model_arr[ $model->id ] = $model->prefix;
+      }
+    }
+
+    //year List
+    $year_arr = array();
+    $year_arr[0] = '';
+    $temp_arr =  $this->Year_model->getList();
+    $temp_arr = $temp_arr->result();
+
+    foreach( $temp_arr as $year ) {
+      foreach($product_list as $product){
+        $year_s = trim(preg_replace('/\s\s+/', ' ', $year->prefix));
+        if(strpos($product->tags, $year_s))
+          $year_arr[ $year->id ] = $year->prefix;
+      }
+    }
+
+    //Model List
+    // $model_arr = array();
+    // $model_arr[0] = '';
+    // $temp_arr =  $this->Model_model->getList();
+    // $temp_arr = $temp_arr->result();
+    // foreach( $temp_arr as $model ) $model_arr[ $model->id ] = $model->prefix;
     $data['model_arr'] = $model_arr;
 
     //Year List
-    $year_arr = array();
-    $year_arr[''] = '';
-    $temp_arr =  $this->Year_model->getList();
-    $temp_arr = $temp_arr->result();
-    foreach( $temp_arr as $year ) $year_arr[ $year->prefix ] = $year->prefix;
+    // $year_arr = array();
+    // $year_arr[0] = '';
+    // $temp_arr =  $this->Year_model->getList();
+    // $temp_arr = $temp_arr->result();
+    // foreach( $temp_arr as $year ) $year_arr[ $year->id ] = $year->prefix;
     $data['year_arr'] = $year_arr;
 
     // Define the rendering data
@@ -162,9 +201,78 @@ class Product extends MY_Controller {
       echo $page . '_' . $count;
   }
 
-  function get_MMY(){
-    header("Content-Type: application/json", true);
-    echo json_encode(array('I'=>'1', 'You'=>'2'));
+  public function get_Make(){
+
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST");
+    header('Content-Type: application/json');
+
+    //Make List
+    $make_arr = array();
+    $make_arr[0] = '';
+    $temp_arr =  $this->Make_model->getList();
+    $temp_arr = $temp_arr->result();
+    foreach( $temp_arr as $make ) $make_arr[ $make->id ] = $make->prefix;
+    echo json_encode( $make_arr );
+  }
+
+  public function get_MMY(){
+
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST");
+    header('Content-Type: application/json');
+
+    if( isset( $_POST[ "make" ] ) && !(isset( $_POST[ "model" ] )) ){
+      $arrCondition =  array(
+        'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
+        'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ]))
+      );
+
+      // Get data
+      $temp =  $this->Product_model->getList( $arrCondition );
+      $product_list = $temp->result();
+
+      //Model List
+      $model_arr = array();
+      $model_arr[0] = '';
+      $temp_arr =  $this->Model_model->getList();
+      $temp_arr = $temp_arr->result();
+      foreach( $temp_arr as $model ) {
+        foreach($product_list as $product){
+          $model_s = trim(preg_replace('/\s\s+/', ' ', $model->prefix));
+          if(strpos($product->tags, $model_s))
+            $model_arr[ $model->id ] = $model->prefix;
+        }
+      }
+      echo json_encode($model_arr);
+    }
+
+    if( isset( $_POST[ "model" ] ) ){
+      $arrCondition =  array(
+        'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
+        'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ])),
+        'model' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "model" ])),
+      );
+
+      // Get data
+      $temp =  $this->Product_model->getList( $arrCondition );
+      $product_list = $temp->result();
+
+      //year List
+      $year_arr = array();
+      $year_arr[0] = '';
+      $temp_arr =  $this->Year_model->getList();
+      $temp_arr = $temp_arr->result();
+
+      foreach( $temp_arr as $year ) {
+        foreach($product_list as $product){
+          $year_s = trim(preg_replace('/\s\s+/', ' ', $year->prefix));
+          if(strpos($product->tags, $year_s))
+            $year_arr[ $year->id ] = $year->prefix;
+        }
+      }
+      echo json_encode($year_arr);
+    }
   }
 
   function manageMake(){
