@@ -541,30 +541,12 @@ $config['MENU_TREE'] = array(
       )
     ),
   ),
-  /*array(
-    'title' => 'Output Setting',
-    'link' => 'output',
-    'icon' => 'plane',
-    'role' => '',
-  ),
   array(
-    'title' => 'Orders',
-    'link' => 'order',
-    'icon' => 'shopping-bag',
+    'title' => 'Vehicle',
+    'link' => 'vehicle',
+    'icon' => 'gears',
     'role' => '',
-  ),
-  array(
-    'title' => 'Logs',
-    'link' => 'log',
-    'icon' => 'file-text-o',
-    'role' => '',
-  ),
-  array(
-    'title' => 'Files',
-    'link' => 'file',
-    'icon' => 'file-text-o',
-    'role' => '',
-  ),*/
+  ),  
 );
 $config['USER_ROLE'] = array(
   'admin' => 'Administrator',
