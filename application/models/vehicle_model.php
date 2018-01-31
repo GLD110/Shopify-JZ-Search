@@ -22,10 +22,8 @@ class Vehicle_model extends Master_model
 
     public function getVehicles($arrCondition)
     {
-        $sql = 'SELECT * FROM ' . $this->_tablename . ' WHERE `make` = ' . $arrCondition['make'] . ' AND `model` = ' . $arrCondition['model'] . ' AND `start_year` =< ' . $arrCondition['year'] . ' AND `end_year` >= ' . $arrCondition['year'];
-
+        $sql = 'SELECT * FROM `' . $this->_tablename . '` WHERE `make` = "' . $arrCondition['make'] . '" AND `model` = "' . $arrCondition['model'] . '" AND ((`start_year` < "' . $arrCondition['year'] . '" AND `end_year` > "' . $arrCondition['year'] . '") OR (`start_year` = "' . $arrCondition['year'] .'") OR (`start_year` = "' . $arrCondition['year'] .'"))';
         $query = $this->db->query($sql);
-
         return $query;
     }
 
