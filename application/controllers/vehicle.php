@@ -141,7 +141,7 @@ class Vehicle extends MY_Controller {
     header("Access-Control-Allow-Methods: GET, POST");
     header('Content-Type: application/json');
 
-    /*  //Model List
+      //Model List
       $model_arr = array();
       $model_arr[0] = '';
       $temp_arr =  $this->Model_model->getList();
@@ -162,26 +162,21 @@ class Vehicle extends MY_Controller {
         $make_s = trim(preg_replace('/\s\s+/', ' ', $make->prefix));
         if($make->id == $_POST['make'])
           $make_prefix = $make->prefix;
-      }*/
+      }
 
-    //if( isset( $_POST ) ){
-      // $arrCondition =  array(
-      //   'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
-      //   'make' => trim(preg_replace('/\s\s+/', ' ', $make_prefix)),
-      //   'model' => trim(preg_replace('/\s\s+/', ' ', $model_prefix)),
-      //   'year' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "year" ])),
-      // );
+    if( isset( $_POST ) ){
       $arrCondition =  array(
-        'shop' => trim(preg_replace('/\s\s+/', ' ', '')),
-        'make' => trim(preg_replace('/\s\s+/', ' ', 'CHEVROLET')),
-        'model' => trim(preg_replace('/\s\s+/', ' ', 'Avalanche 1500')),
-        'year' => trim(preg_replace('/\s\s+/', ' ', '2004')),
+        'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
+        'make' => trim(preg_replace('/\s\s+/', ' ', $make_prefix)),
+        'model' => trim(preg_replace('/\s\s+/', ' ', $model_prefix)),
+        'year' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "year" ])),
       );
+
       // Get data
       $temp =  $this->Vehicle_model->getVehicles( $arrCondition );
       $vehicle_list = $temp->result();
 
       echo json_encode($vehicle_list);
-    //}
+    }
   }
 }
