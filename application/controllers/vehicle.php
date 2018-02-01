@@ -7,6 +7,8 @@ class Vehicle extends MY_Controller {
     $this->load->model('Vehicle_model');
     $this->load->model( 'Make_model' );
     $this->load->model( 'Model_model' );
+    $this->load->model( 'Year_model' );
+    $this->load->model( 'Product_model' );
 
   }
 
@@ -141,34 +143,11 @@ class Vehicle extends MY_Controller {
     header("Access-Control-Allow-Methods: GET, POST");
     header('Content-Type: application/json');
 
-      //Model List
-      $model_arr = array();
-      $model_arr[0] = '';
-      $temp_arr =  $this->Model_model->getList();
-      $temp_arr = $temp_arr->result();
-      foreach( $temp_arr as $model ) {
-        $model_s = trim(preg_replace('/\s\s+/', ' ', $model->prefix));
-        if($model->id == $_POST['model'])
-          $model_prefix = $model->prefix;
-      }
-
-      //make List
-      $make_arr = array();
-      $make_arr[0] = '';
-      $temp_arr =  $this->Make_model->getList();
-      $temp_arr = $temp_arr->result();
-
-      foreach( $temp_arr as $make ) {
-        $make_s = trim(preg_replace('/\s\s+/', ' ', $make->prefix));
-        if($make->id == $_POST['make'])
-          $make_prefix = $make->prefix;
-      }
-
     if( isset( $_POST ) ){
       $arrCondition =  array(
         'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
-        'make' => trim(preg_replace('/\s\s+/', ' ', $make_prefix)),
-        'model' => trim(preg_replace('/\s\s+/', ' ', $model_prefix)),
+        'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ])),
+        'model' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "model" ])),
         'year' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "year" ])),
       );
 
@@ -177,6 +156,74 @@ class Vehicle extends MY_Controller {
       $vehicle_list = $temp->result();
 
       echo json_encode($vehicle_list);
+    }
+  }
+
+  public function get_MMY(){
+
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST");
+    header('Content-Type: application/json');
+
+    if( isset( $_POST[ "make" ] ) && !(isset( $_POST[ "model" ] )) ){
+
+      $arrCondition =  array(
+        'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
+        'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ]))
+      );
+
+      // Get data
+      $temp =  $this->Vehicle_model->getVehicles( $arrCondition );
+      $vehicle_temp = array('0'=>array('model' => ''));
+      $vehicle_list = $temp->result();
+      $vehicle_list = array_merge($vehicle_temp, $vehicle_list);
+      //$vehicle_list = array_unique($vehicle_list);
+
+      echo json_encode($vehicle_list);
+    }
+
+    if( isset( $_POST[ "model" ] ) && !(isset( $_POST[ "year" ] ))){
+
+      $arrCondition =  array(
+        'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
+        'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ])),
+        'model' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "model" ])),
+      );
+
+      // Get data
+      $temp =  $this->Vehicle_model->getVehicles( $arrCondition );
+      $vehicle_list = $temp->result();
+
+      //year List
+      $year_arr = array();
+      $year_arr[0] = '';
+      $temp_arr =  $this->Year_model->getList();
+      $temp_arr = $temp_arr->result();
+
+      foreach( $temp_arr as $year ) {
+        foreach($vehicle_list as $vehicle){
+          $year_s = trim(preg_replace('/\s\s+/', ' ', $year->prefix));
+          if(( $vehicle->start_year <= $year_s ) && ( $vehicle->end_year >= $year_s ))
+            array_push($year_arr, $year_s);
+        }
+      }
+      echo json_encode($year_arr);
+    }
+
+    if( isset( $_POST[ "year" ] ) ){
+
+      $arrCondition =  array(
+        'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
+        'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ])),
+        'model' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "model" ])),
+        'year' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "year" ])),
+      );
+
+      // Get data
+      $temp =  $this->Product_model->getVehicle_Products( $arrCondition );
+      $product_list = $temp->result();
+
+      echo json_encode($product_list);
     }
   }
 }
