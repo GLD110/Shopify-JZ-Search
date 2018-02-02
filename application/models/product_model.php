@@ -56,7 +56,7 @@ class Product_model extends Master_model
           $this->db->where( 'id', $arrCondition['model'] );
           $query = $this->db->get( 'model' );
           $result = $query->result();
-          
+
           $where["tags LIKE '%" . preg_replace('/\s\s+/', '', $result[0]->prefix ) . "%'"] = '';
         }
         if( !empty( $arrCondition['year'] ) ) {
@@ -104,6 +104,39 @@ class Product_model extends Master_model
         $query = $this->db->get_where( $this->_tablename );
 
         return $query;
+    }
+
+    public function getVehicle_Products($arrCondition)
+    {
+      $sql = 'SELECT * FROM `' . 'vehicle' . '` WHERE `make` = "' . $arrCondition['make'] . '" AND `model` = "' . $arrCondition['model'] . '" AND ((`start_year` < "' . $arrCondition['year'] . '" AND `end_year` > "' . $arrCondition['year'] . '") OR (`start_year` = "' . $arrCondition['year'] .'") OR (`start_year` = "' . $arrCondition['year'] .'"))';
+      $query = $this->db->query($sql);
+      $vehicles = $query->result();
+      $search_tags = array_merge(explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->oem_tire_size))), explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->plus_tire_size))), explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->bolt_pattern_cm))));
+
+      $t_where = '';
+      for($i=1; $i<sizeof($search_tags); $i++)
+      {
+        if($search_tags[$i] !='')
+          $t_where = $t_where . "tags LIKE '%" . $search_tags[$i] . "%'" . " OR ";
+      }
+      if($search_tags[0] != '')
+        $t_where = $t_where . "tags LIKE '%" . $search_tags[0] . "%'";
+
+      $where = array( 'shop' => $this->_shop );
+      $where[$t_where] = '';
+
+      $this->db->order_by( 'product_id', 'ASC' );
+
+      foreach( $where as $key => $val )
+      if( $val == '' )
+          $this->db->where( $key );
+      else
+          $this->db->where( $key, $val );
+
+      $this->db->select('handle, title, price, image_url, tags');
+      $query = $this->db->get_where( $this->_tablename );
+
+      return $query;
     }
 
     // Mark all the products to be unexist
