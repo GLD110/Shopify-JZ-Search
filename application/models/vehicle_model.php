@@ -22,7 +22,15 @@ class Vehicle_model extends Master_model
 
     public function getVehicles($arrCondition)
     {
-        $sql = 'SELECT * FROM `' . $this->_tablename . '` WHERE `make` = "' . $arrCondition['make'] . '" AND `model` = "' . $arrCondition['model'] . '" AND ((`start_year` < "' . $arrCondition['year'] . '" AND `end_year` > "' . $arrCondition['year'] . '") OR (`start_year` = "' . $arrCondition['year'] .'") OR (`start_year` = "' . $arrCondition['year'] .'"))';
+        $sql = 'SELECT DISTINCT `model` FROM `' . $this->_tablename . '` WHERE `make` = "' . $arrCondition['make'] . '"';
+
+        if(isset($arrCondition['model'])){
+          $sql = 'SELECT * FROM `' . $this->_tablename . '` WHERE `make` = "' . $arrCondition['make'] . '"';
+          $sql = $sql . ' AND `model` = "' . $arrCondition['model'] . '"';
+        }
+        if(isset($arrCondition['year']))
+          $sql = $sql . ' AND ((`start_year` < "' . $arrCondition['year'] . '" AND `end_year` > "' . $arrCondition['year'] . '") OR (`start_year` = "' . $arrCondition['year'] .'") OR (`start_year` = "' . $arrCondition['year'] .'"))';
+
         $query = $this->db->query($sql);
         return $query;
     }
