@@ -217,6 +217,7 @@ class Vehicle extends MY_Controller {
         'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ])),
         'model' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "model" ])),
         'year' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "year" ])),
+        'category' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "category" ])),
       );
 
       // Get data

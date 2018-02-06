@@ -29,7 +29,7 @@ class Vehicle_model extends Master_model
           $sql = $sql . ' AND `model` = "' . $arrCondition['model'] . '"';
         }
         if(isset($arrCondition['year']))
-          $sql = $sql . ' AND ((`start_year` < "' . $arrCondition['year'] . '" AND `end_year` > "' . $arrCondition['year'] . '") OR (`start_year` = "' . $arrCondition['year'] .'") OR (`start_year` = "' . $arrCondition['year'] .'"))';
+          $sql = $sql . ' AND ((`start_year` < "' . $arrCondition['year'] . '" AND `end_year` > "' . $arrCondition['year'] . '") OR (`start_year` = "' . $arrCondition['year'] .'") OR (`end_year` = "' . $arrCondition['year'] .'"))';
 
         $query = $this->db->query($sql);
         return $query;

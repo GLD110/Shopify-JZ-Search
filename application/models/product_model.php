@@ -108,18 +108,20 @@ class Product_model extends Master_model
 
     public function getVehicle_Products($arrCondition)
     {
-      $sql = 'SELECT * FROM `' . 'vehicle' . '` WHERE `make` = "' . $arrCondition['make'] . '" AND `model` = "' . $arrCondition['model'] . '" AND ((`start_year` < "' . $arrCondition['year'] . '" AND `end_year` > "' . $arrCondition['year'] . '") OR (`start_year` = "' . $arrCondition['year'] .'") OR (`start_year` = "' . $arrCondition['year'] .'"))';
+      $sql = 'SELECT * FROM `' . 'vehicle' . '` WHERE `make` = "' . $arrCondition['make'] . '" AND `model` = "' . $arrCondition['model'] . '" AND ((`start_year` < "' . $arrCondition['year'] . '" AND `end_year` > "' . $arrCondition['year'] . '") OR (`start_year` = "' . $arrCondition['year'] .'") OR (`end_year` = "' . $arrCondition['year'] .'"))';
       $query = $this->db->query($sql);
       $vehicles = $query->result();
 
       //this search for tire and wheel
-      $search_tags = array_merge(explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->oem_tire_size))), explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->plus_tire_size))), explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->bolt_pattern_cm))));
+      //$search_tags = array_merge(explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->oem_tire_size))), explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->plus_tire_size))), explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->bolt_pattern_cm))));
 
       //this search only for tire
-      //$search_tags = array_merge(explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->oem_tire_size))), explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->plus_tire_size))), explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->bolt_pattern_cm))));
+      if(isset($arrCondition['category']) && $arrCondition['category'] == 'tire')
+        $search_tags = array_merge(explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->oem_tire_size))), explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->plus_tire_size))));
 
       //new search only for wheel
-      //$search_tags = array_merge(explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->oem_tire_size))), explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->plus_tire_size))), explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->bolt_pattern_cm))));
+      if(isset($arrCondition['category']) && $arrCondition['category'] == 'wheel')
+        $search_tags = explode(",", trim(preg_replace('/\s+/', ' ', $vehicles[0]->bolt_pattern_cm)));
 
       $t_where = '';
       for($i=1; $i<sizeof($search_tags); $i++)
