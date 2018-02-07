@@ -68,8 +68,6 @@ class Product_model extends Master_model
         }
         if( !empty( $arrCondition['variant_id'] ) ) $where['variant_id'] = $arrCondition['variant_id'];
 
-        //var_dump($arrCondition );exit;
-
         // Product only - Group by, Get total records
         if( isset( $arrCondition['page_number'] ) )
         {
@@ -93,8 +91,6 @@ class Product_model extends Master_model
             $page_size = isset( $arrCondition['page_size'] ) ? $arrCondition['page_size'] : $this->config->item('PAGE_SIZE');
             $this->db->limit( $page_size, $arrCondition['page_number'] );
         }
-
-        //var_dump($arrCondition['make']);exit;
 
         foreach( $where as $key => $val )
         if( $val == '' )
