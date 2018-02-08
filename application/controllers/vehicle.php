@@ -176,8 +176,7 @@ class Vehicle extends MY_Controller {
       $temp =  $this->Vehicle_model->getVehicles( $arrCondition );
       $vehicle_temp = array('0'=>array('model' => ''));
       $vehicle_list = $temp->result();
-      $vehicle_list = array_merge($vehicle_temp, $vehicle_list);
-      //$vehicle_list = array_unique($vehicle_list);
+      $vehicle_list = array_merge($vehicle_temp, $vehicle_list);    
 
       echo json_encode($vehicle_list);
     }
