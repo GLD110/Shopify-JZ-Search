@@ -139,7 +139,7 @@ class Product_model extends Master_model
       else
           $this->db->where( $key, $val );
 
-      $this->db->select('handle, title, price, image_url, tags');
+      $this->db->select('handle, title, price, image_url, tags, variant_id');
       $query = $this->db->get_where( $this->_tablename );
 
       return $query;
