@@ -1,0 +1,172 @@
+<div id="mmy_search" style="text-align: center; height: auto; margin-bottom: 30px;">
+  <div id="mmy_make">
+    <select id="sel_make" name="sel_make" style="width: 150px; height: 65px; margin: auto;"></select>
+  </div>
+  <div id="mmy_model">
+  	<select id="sel_model" name="sel_model" style="width: 150px; height: 65px; margin: auto;" disabled></select>
+  </div>
+  <div id="mmy_year">
+  	<select id="sel_year" name="sel_year" style="width: 150px; height: 65px; margin: auto;" disabled></select>
+  </div>
+  <div id="mmy_buttons" style="height: 75px;">
+    <div id="search_button" style="width: 10%; float: left; margin: 30px 2% 0 38%; background: green; cursor: pointer; color: black;">Search</div>
+  	<div id="reset_button" style="width: 10%; float: left; margin: 30px 33% 0 2%; background: green; cursor: pointer; color: black;">Reset</div>
+  </div>
+  <div id="mmy_vehicle" style="clear: both; text-align: left; padding: 30px 10%;">
+  </div>
+</div>
+
+<script>
+  $("document").ready(function() {
+
+  $.ajax({
+      type: "POST",
+      url: "https://vggio.com/Shopify-JZ-Search/product/get_Make",
+      data: 'test=' + '123',
+      dataType: "json", // Set the data type so jQuery can parse it for you
+      success: function (data) {
+        console.log(data);
+        $("#sel_model").html('');
+        $.each(data,function(key,value){
+          $("#sel_make").append('<option value=' + key + '>' + value + '</option>');
+        });
+        $("#sel_model").attr('disabled', false);
+      }
+  });
+
+});
+
+  $('#search_button').click(function(){
+    funcSyncVehicle();
+    funcSyncProduct();
+    $('.pagination').hide();
+  });
+
+  $('#reset_button').click(function(){
+    $('#sel_make').find('option:selected').prop("selected",false);
+    $('#sel_model').find('option:selected').prop("selected",false);
+    $('#sel_year').find('option:selected').prop("selected",false);
+
+    $('#sel_model').prop("disabled", true);
+    $('#sel_year').prop("disabled", true);
+  });
+
+  $('#sel_make').change(function(){
+    $('#sel_year').attr('disabled', true);
+    funcSyncMMY_Model();
+  });
+
+  $('#sel_model').change(function(){
+    funcSyncMMY_Year();
+  });
+
+  var funcSyncMMY_Model = function(){
+
+      var make = $('select[name="sel_make"] option:selected').html();
+      var model = $('select[name="sel_model"] option:selected').html();
+      var year = $('select[name="sel_year"] option:selected').html();
+
+      $.ajax({
+          type: "POST",
+          url: "https://vggio.com/Shopify-JZ-Search/vehicle/get_MMY",
+        data: { shop: 'jz-general-store.myshopify.com', make: make},
+          dataType: "json", // Set the data type so jQuery can parse it for you
+          success: function (data) {
+              console.log(data);
+
+                $("#sel_model").html('');
+                $.each(data,function(key,value){
+                    $("#sel_model").append('<option value=' + value.id + '>' + value.model + '</option>');
+                });
+                $("#sel_model").attr('disabled', false);
+          }
+      });
+  }
+
+  var funcSyncMMY_Year = function(){
+
+      var make = $('select[name="sel_make"] option:selected').html();
+      var model = $('select[name="sel_model"] option:selected').html();
+      var year = $('select[name="sel_year"] option:selected').html();
+
+      $.ajax({
+          type: "POST",
+          url: "https://vggio.com/Shopify-JZ-Search/vehicle/get_MMY",
+          data: { shop: 'jz-general-store.myshopify.com', make: make, model: model},
+          dataType: "json", // Set the data type so jQuery can parse it for you
+          success: function (data) {
+              console.log(data);
+
+                $("#sel_year").html('');
+                $.each(data,function(key,value){
+                    $("#sel_year").append('<option value=' + key + '>' + value + '</option>');
+                });
+                $("#sel_year").attr('disabled', false);
+          }
+      });
+  }
+
+  var funcSyncProduct = function(){
+
+   	  var select_category = 'tire';
+      var make = $('select[name="sel_make"] option:selected').html();
+      var model = $('select[name="sel_model"] option:selected').html();
+      var year = $('select[name="sel_year"] option:selected').html();
+
+      $.ajax({
+          type: "POST",
+          url: "https://vggio.com/Shopify-JZ-Search/vehicle/get_MMY",
+          data: { shop: 'jz-general-store.myshopify.com', make: make, model: model, year: year, category: select_category},
+          dataType: "json", // Set the data type so jQuery can parse it for you
+          success: function (data) {
+              console.log(data);
+            $('.product-grid__inner').html('');
+            $.each(data,function(key,value){
+              $(".product-grid__inner").append('<div class="grid__item md-dn--one-half lg--one-quarter dt--one-quarter mt4 text-align--center">' +
+                '<a href="https://jz-general-store.myshopify.com/collections/all/products/' + value.handle + '"class="grid__image relative">' +
+                '<div class="product__on-sale color--shop-accent-overlay bg--shop-accent f--main t--meta font-size--xs lg--font-size--s">' + 'On Sale' + '</div>' +
+                '<img src="' + value.image_url + '">' +
+                '</a>' +
+                '<p class="h6 font-size--m md--font-size--ml f--title">' +
+                  '<a href="https://jz-general-store.myshopify.com/collections/all/products/' + value.handle + '">' + value.title + '</a>' +
+                '</p>' +
+                '<p class="color--shop-accent font-size--s  t--meta f--main m0">' +
+                      '$' + value.price +
+                  '<span class="visually-hidden mr1">' + 'Regular price' + '</span>' +
+                  '<s class="color--primary ml1">' + '' + '</s>' +
+                '</p>' +
+              '</div>');
+            });
+          }
+      });
+  }
+
+  var funcSyncVehicle = function(){
+
+      var make = $('select[name="sel_make"] option:selected').html();
+      var model = $('select[name="sel_model"] option:selected').html();
+      var year = $('select[name="sel_year"] option:selected').html();
+
+      $.ajax({
+          type: "POST",
+          url: "https://vggio.com/Shopify-JZ-Search/vehicle/getVehicles",
+          data: { shop: 'jz-general-store.myshopify.com', make: make, model: model, year: year},
+          dataType: "json", // Set the data type so jQuery can parse it for you
+          success: function (data) {
+              console.log(data);
+            $('#mmy_vehicle').html('');
+            $.each(data,function(key,value){
+              $("#mmy_vehicle").append('<div><b>Your vehicle is:</b> ' + $('select[name="sel_make"] option:selected').html() + ' '
+                                       + $('select[name="sel_model"] option:selected').html() + ' '
+                                       + $('select[name="sel_year"] option:selected').html() + '</div>'
+                                       + '<div><b>Your OEM Tire Sizes are:</b> ' + value.oem_tire_size + '</div>'
+                                       + '<div><b>Your Plus Tire Sizes are:</b> ' + value.plus_tire_size + '</div>'
+                                       + '<div><b>Your Bolt Pattern Sizes are:</b> ' + value.bolt_pattern_cm + '</div>'
+                                      );
+            });
+            $('#mmy_vehicle').css('background', 'lightgrey');
+          }
+      });
+  }
+
+</script>  
