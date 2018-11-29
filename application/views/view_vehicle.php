@@ -181,8 +181,6 @@
 
 </div>
 
-
-
 <a class="confirmLink" href="#"></a>
 <div id="dialog" title="Confirmation Required" style="display:none;">
   Are you sure want to delete?
@@ -214,7 +212,6 @@ $(document).ready(function (){
         autoOpen: false,
         modal: true
     });
-
 
     $(".confirmLink").click(function(e) {
         e.preventDefault();
