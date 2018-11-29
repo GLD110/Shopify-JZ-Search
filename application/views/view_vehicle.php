@@ -1,5 +1,5 @@
 <?php
-  $arrRole = $this->config->item('USER_ROLE'); 
+  $arrRole = $this->config->item('USER_ROLE');
 ?>
 <!-- Content Header (Page header) -->
 <section class="content-header">
