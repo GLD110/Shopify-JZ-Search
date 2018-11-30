@@ -105,19 +105,19 @@ class Product extends MY_Controller {
     }
 
     //Model List
-    // $model_arr = array();
-    // $model_arr[0] = '';
-    // $temp_arr =  $this->Model_model->getList();
-    // $temp_arr = $temp_arr->result();
-    // foreach( $temp_arr as $model ) $model_arr[ $model->id ] = $model->prefix;
+    /*$model_arr = array();
+    $model_arr[0] = '';
+    $temp_arr =  $this->Model_model->getList();
+    $temp_arr = $temp_arr->result();
+    foreach( $temp_arr as $model ) $model_arr[ $model->id ] = $model->prefix;*/
     $data['model_arr'] = $model_arr;
 
     //Year List
-    // $year_arr = array();
+    /* $year_arr = array();
     // $year_arr[0] = '';
     // $temp_arr =  $this->Year_model->getList();
     // $temp_arr = $temp_arr->result();
-    // foreach( $temp_arr as $year ) $year_arr[ $year->id ] = $year->prefix;
+    // foreach( $temp_arr as $year ) $year_arr[ $year->id ] = $year->prefix;*/
     $data['year_arr'] = $year_arr;
 
     // Define the rendering data
