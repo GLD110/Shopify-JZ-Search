@@ -119,7 +119,6 @@
                                 <label>No</label>
                                 <input type="radio" value="0" name="is_active" style="display: inline">
 
-
                             </div>
                         </td>
                     </tr>
@@ -137,8 +136,6 @@
     </div>
 
 </div>
-
-
 
 <a class="confirmLink" href="#"></a>
 <div id="dialog" title="Confirmation Required" style="display:none;">
@@ -171,7 +168,6 @@ $(document).ready(function (){
         autoOpen: false,
         modal: true
     });
-
 
     $(".confirmLink").click(function(e) {
         e.preventDefault();
