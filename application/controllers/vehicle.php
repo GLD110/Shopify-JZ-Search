@@ -125,17 +125,17 @@ class Vehicle extends MY_Controller {
     }
   }
 
-  function updateVehicle( $key ){
-    if($this->session->userdata('role') == 'admin'){
-      $val = $this->input->post('value');
-      $pk =  $this->input->post('pk');
-      $data = array(
-        $key => $val
-      );
-
-      $this->Vehicle_model->update( $pk, $data );
-    }
-  }
+  // function updateVehicle( $key ){
+  //   if($this->session->userdata('role') == 'admin'){
+  //     $val = $this->input->post('value');
+  //     $pk =  $this->input->post('pk');
+  //     $data = array(
+  //       $key => $val
+  //     );
+  //
+  //     $this->Vehicle_model->update( $pk, $data );
+  //   }
+  // }
 
   public function getVehicles(){
 
@@ -176,7 +176,7 @@ class Vehicle extends MY_Controller {
       $temp =  $this->Vehicle_model->getVehicles( $arrCondition );
       $vehicle_temp = array('0'=>array('model' => ''));
       $vehicle_list = $temp->result();
-      $vehicle_list = array_merge($vehicle_temp, $vehicle_list);    
+      $vehicle_list = array_merge($vehicle_temp, $vehicle_list);
 
       echo json_encode($vehicle_list);
     }
