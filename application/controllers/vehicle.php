@@ -125,17 +125,17 @@ class Vehicle extends MY_Controller {
     }
   }
 
-  // function updateVehicle( $key ){
-  //   if($this->session->userdata('role') == 'admin'){
-  //     $val = $this->input->post('value');
-  //     $pk =  $this->input->post('pk');
-  //     $data = array(
-  //       $key => $val
-  //     );
-  //
-  //     $this->Vehicle_model->update( $pk, $data );
-  //   }
-  // }
+  function updateVehicle( $key ){
+    if($this->session->userdata('role') == 'admin'){
+      $val = $this->input->post('value');
+      $pk =  $this->input->post('pk');
+      $data = array(
+        $key => $val
+      );
+
+      $this->Vehicle_model->update( $pk, $data );
+    }
+  }
 
   public function getVehicles(){
 
