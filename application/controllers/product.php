@@ -420,17 +420,17 @@ class Product extends MY_Controller {
      }
   }
 
-  // function updateModel( $key ){
-  //   if($this->session->userdata('role') == 'admin'){
-  //     $val = $this->input->post('value');
-  //     $pk =  $this->input->post('pk');
-  //     $data = array(
-  //       $key => $val
-  //     );
-  //
-  //     $this->Model_model->update( $pk, $data );
-  //   }
-  // }
+  function updateModel( $key ){
+    if($this->session->userdata('role') == 'admin'){
+      $val = $this->input->post('value');
+      $pk =  $this->input->post('pk');
+      $data = array(
+        $key => $val
+      );
+
+      $this->Model_model->update( $pk, $data );
+    }
+  }
 
   function manageYear(){
       // Check the login
