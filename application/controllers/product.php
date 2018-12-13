@@ -393,32 +393,32 @@ class Product extends MY_Controller {
       exit;
   }
 
-  // function createModel(){
-  //    if($this->session->userdata('role') == 'admin'){
-  //     $this->form_validation->set_rules('prefix', 'Prefix', 'callback_prefix_check');
-  //     //$this->form_validation->set_rules('password', 'Password', 'required|matches[cpassword]');
-  //
-  //     if ($this->form_validation->run() == FALSE){
-  //         echo validation_errors('<div class="alert alert-danger">', '</div>');
-  //         exit;
-  //     }
-  //     else{
-  //           if($this->Model_model->createModel()){
-  //               echo '<div class="alert alert-success">This model created successfully</div>';
-  //               //redirect('product/manageModel');
-  //               exit;
-  //           }
-  //           else{
-  //               echo '<div class="alert alert-danger">Sorry ! something went wrong </div>';
-  //               exit;
-  //           }
-  //         }
-  //    }
-  //    else{
-  //        echo '<div class="alert alert-danger">Invalid model</div>';
-  //        exit;
-  //    }
-  // }
+  function createModel(){
+     if($this->session->userdata('role') == 'admin'){
+      $this->form_validation->set_rules('prefix', 'Prefix', 'callback_prefix_check');
+      //$this->form_validation->set_rules('password', 'Password', 'required|matches[cpassword]');
+
+      if ($this->form_validation->run() == FALSE){
+          echo validation_errors('<div class="alert alert-danger">', '</div>');
+          exit;
+      }
+      else{
+            if($this->Model_model->createModel()){
+                echo '<div class="alert alert-success">This model created successfully</div>';
+                //redirect('product/manageModel');
+                exit;
+            }
+            else{
+                echo '<div class="alert alert-danger">Sorry ! something went wrong </div>';
+                exit;
+            }
+          }
+     }
+     else{
+         echo '<div class="alert alert-danger">Invalid model</div>';
+         exit;
+     }
+  }
 
   function updateModel( $key ){
     if($this->session->userdata('role') == 'admin'){
