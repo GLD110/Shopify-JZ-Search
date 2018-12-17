@@ -4,23 +4,23 @@ class Product extends MY_Controller {
 
   public function __construct() {
     parent::__construct();
-    // $this->load->model( 'Product_model' );
-    // $this->load->model( 'Make_model' );
-    // $this->load->model( 'Model_model' );
-    // $this->load->model( 'Year_model' );
-    //
-    // // Define the search values
-    // $this->_searchConf  = array(
-    //   'name' => '',
-    //   'make' => '',
-    //   'model' => '',
-    //   'year' => '',
-    //   'shop' => $this->_default_store,
-    //   'page_size' => $this->config->item('PAGE_SIZE'),
-    //   'sort_field' => 'product_id',
-    //   'sort_direction' => 'DESC',
-    // );
-    // $this->_searchSession = 'product_app_page';
+    $this->load->model( 'Product_model' );
+    $this->load->model( 'Make_model' );
+    $this->load->model( 'Model_model' );
+    $this->load->model( 'Year_model' );
+
+    // Define the search values
+    $this->_searchConf  = array(
+      'name' => '',
+      'make' => '',
+      'model' => '',
+      'year' => '',
+      'shop' => $this->_default_store,
+      'page_size' => $this->config->item('PAGE_SIZE'),
+      'sort_field' => 'product_id',
+      'sort_direction' => 'DESC',
+    );
+    $this->_searchSession = 'product_app_page';
   }
 
   public function index(){
