@@ -38,15 +38,15 @@ class Product extends MY_Controller {
 
     // Get data
     $this->Product_model->rewriteParam($this->_searchVal['shop']);
-    // $arrCondition =  array(
-    //   'name' => $this->_searchVal['name'],
-    //   'make' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['make'])),
-    //   'model' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['model'])),
-    //   'year' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['year'])),
-    //   'sort' => $this->_searchVal['sort_field'] . ' ' . $this->_searchVal['sort_direction'],
-    //   'page_number' => $page,
-    //   'page_size' => $this->_searchVal['page_size'],
-    // );
+    $arrCondition =  array(
+      'name' => $this->_searchVal['name'],
+      'make' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['make'])),
+      'model' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['model'])),
+      'year' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['year'])),
+      'sort' => $this->_searchVal['sort_field'] . ' ' . $this->_searchVal['sort_direction'],
+      'page_number' => $page,
+      'page_size' => $this->_searchVal['page_size'],
+    );
 
     //var_dump($this->_searchVal['model']);exit;
 
