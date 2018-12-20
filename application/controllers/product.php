@@ -290,19 +290,19 @@ class Product extends MY_Controller {
     }
   }
 
-  function manageMake(){
-      // Check the login
-      $this->is_logged_in();
-
-      if($this->session->userdata('role') == 'admin'){
-          $data['query'] =  $this->Make_model->getList();
-          $data['arrStoreList'] =  $this->_arrStoreList;
-
-          $this->load->view('view_header');
-          $this->load->view('view_make', $data);
-          $this->load->view('view_footer');
-      }
-  }
+  // function manageMake(){
+  //     // Check the login
+  //     $this->is_logged_in();
+  //
+  //     if($this->session->userdata('role') == 'admin'){
+  //         $data['query'] =  $this->Make_model->getList();
+  //         $data['arrStoreList'] =  $this->_arrStoreList;
+  //
+  //         $this->load->view('view_header');
+  //         $this->load->view('view_make', $data);
+  //         $this->load->view('view_footer');
+  //     }
+  // }
 
   function delMake(){
       if($this->session->userdata('role') == 'admin'){
