@@ -322,32 +322,32 @@ class Product extends MY_Controller {
       exit;
   }
 
-  function createMake(){
-     if($this->session->userdata('role') == 'admin'){
-      $this->form_validation->set_rules('prefix', 'Prefix', 'callback_prefix_check');
-      //$this->form_validation->set_rules('password', 'Password', 'required|matches[cpassword]');
-
-      if ($this->form_validation->run() == FALSE){
-          echo validation_errors('<div class="alert alert-danger">', '</div>');
-          exit;
-      }
-      else{
-            if($this->Make_model->createMake()){
-                echo '<div class="alert alert-success">This make created successfully</div>';
-                //redirect('product/manageMake');
-                exit;
-            }
-            else{
-                echo '<div class="alert alert-danger">Sorry ! something went wrong </div>';
-                exit;
-            }
-          }
-     }
-     else{
-         echo '<div class="alert alert-danger">Invalid make</div>';
-         exit;
-     }
-  }
+  // function createMake(){
+  //    if($this->session->userdata('role') == 'admin'){
+  //     $this->form_validation->set_rules('prefix', 'Prefix', 'callback_prefix_check');
+  //     //$this->form_validation->set_rules('password', 'Password', 'required|matches[cpassword]');
+  //
+  //     if ($this->form_validation->run() == FALSE){
+  //         echo validation_errors('<div class="alert alert-danger">', '</div>');
+  //         exit;
+  //     }
+  //     else{
+  //           if($this->Make_model->createMake()){
+  //               echo '<div class="alert alert-success">This make created successfully</div>';
+  //               //redirect('product/manageMake');
+  //               exit;
+  //           }
+  //           else{
+  //               echo '<div class="alert alert-danger">Sorry ! something went wrong </div>';
+  //               exit;
+  //           }
+  //         }
+  //    }
+  //    else{
+  //        echo '<div class="alert alert-danger">Invalid make</div>';
+  //        exit;
+  //    }
+  // }
 
   function updateMake( $key ){
     if($this->session->userdata('role') == 'admin'){
