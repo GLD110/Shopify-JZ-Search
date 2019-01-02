@@ -45,61 +45,61 @@ class Order extends MY_Controller {
       $this->manage();
   }
 
-  public function manage( $page =  0 ){
-
-    //echo 123456789;
-    //header( "HTTPS/1.1 200 OK" );exit();
-
-    $this->_searchVal['shop'] = trim( $this->_searchVal['shop'], 'http://' );
-    $this->_searchVal['shop'] = trim( $this->_searchVal['shop'], 'https://' );
-
-    // Check the login
-    $this->is_logged_in();
-
-    // Init the search value
-    $this->initSearchValue();
-
-    $created_at = $this->_searchVal['created_at'];
-    if($created_at == '')
-    {
-        $this->_searchVal['created_at'] = date('m/d/Y');
-    }
-    // Get data
-    $arrCondition =  array(
-       'customer_name' => $this->_searchVal['customer_name'],
-       'order_name' => $this->_searchVal['order_name'],
-       'page_number' => $page,
-       'page_size' => $this->_searchVal['page_size'],
-       'created_at' => $this->_searchVal['created_at'],
-       'sort' => $this->_searchVal['sort_field'] . ' ' . $this->_searchVal['sort_direction'],
-    );
-
-    $this->Order_model->rewriteParam($this->_default_store);
-    $data['query'] =  $this->Order_model->getList( $arrCondition );
-    $data['total_count'] = sizeof($data['query']->result());//$this->Order_model->getTotalCount();
-    $data['page'] = $page;
-
-      //var_dump($data['query']);exit;
-
-    // Define the rendering data
-    $data = $data + $this->setRenderData();
-
-    // Store List
-    $arr = array();
-    foreach( $this->_arrStoreList as $shop => $row ) $arr[ $shop ] = $shop;
-    $data['arrStoreList'] = $arr;
-
-    // Rate
-    //$data['sel_rate'] = $this->_arrStoreList[ $this->_searchVal['shop'] ]->rate;
-
-    // Load Pagenation
-    $this->load->library('pagination');
-
-    // Renter to view
-    $this->load->view('view_header');
-    $this->load->view('view_order', $data );
-    $this->load->view('view_footer');
-  }
+  // public function manage( $page =  0 ){
+  //
+  //   //echo 123456789;
+  //   //header( "HTTPS/1.1 200 OK" );exit();
+  //
+  //   $this->_searchVal['shop'] = trim( $this->_searchVal['shop'], 'http://' );
+  //   $this->_searchVal['shop'] = trim( $this->_searchVal['shop'], 'https://' );
+  //
+  //   // Check the login
+  //   $this->is_logged_in();
+  //
+  //   // Init the search value
+  //   $this->initSearchValue();
+  //
+  //   $created_at = $this->_searchVal['created_at'];
+  //   if($created_at == '')
+  //   {
+  //       $this->_searchVal['created_at'] = date('m/d/Y');
+  //   }
+  //   // Get data
+  //   $arrCondition =  array(
+  //      'customer_name' => $this->_searchVal['customer_name'],
+  //      'order_name' => $this->_searchVal['order_name'],
+  //      'page_number' => $page,
+  //      'page_size' => $this->_searchVal['page_size'],
+  //      'created_at' => $this->_searchVal['created_at'],
+  //      'sort' => $this->_searchVal['sort_field'] . ' ' . $this->_searchVal['sort_direction'],
+  //   );
+  //
+  //   $this->Order_model->rewriteParam($this->_default_store);
+  //   $data['query'] =  $this->Order_model->getList( $arrCondition );
+  //   $data['total_count'] = sizeof($data['query']->result());//$this->Order_model->getTotalCount();
+  //   $data['page'] = $page;
+  //
+  //     //var_dump($data['query']);exit;
+  //
+  //   // Define the rendering data
+  //   $data = $data + $this->setRenderData();
+  //
+  //   // Store List
+  //   $arr = array();
+  //   foreach( $this->_arrStoreList as $shop => $row ) $arr[ $shop ] = $shop;
+  //   $data['arrStoreList'] = $arr;
+  //
+  //   // Rate
+  //   //$data['sel_rate'] = $this->_arrStoreList[ $this->_searchVal['shop'] ]->rate;
+  //
+  //   // Load Pagenation
+  //   $this->load->library('pagination');
+  //
+  //   // Renter to view
+  //   $this->load->view('view_header');
+  //   $this->load->view('view_order', $data );
+  //   $this->load->view('view_footer');
+  // }
 
   public function sync( $shop )
   {
