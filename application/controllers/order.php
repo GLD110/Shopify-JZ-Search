@@ -101,38 +101,38 @@ class Order extends MY_Controller {
     $this->load->view('view_footer');
   }
 
-  public function sync( $shop )
-  {
-    $this->load->model( 'Process_model' );
-
-    if(empty($shop))
-        $shop = $this->_default_store;
-
-    $this->load->model( 'Shopify_model' );
-    $this->Shopify_model->setStore( $shop, $this->_arrStoreList[$shop]->app_id, $this->_arrStoreList[$shop]->app_secret );
-
-	//var_dump(123);exit;
-
-    // Get the lastest day
-    $this->Order_model->rewriteParam( $shop );
-    $last_day = $this->Order_model->getLastOrderDate();
-
-    $last_day = str_replace(' ', 'T', $last_day);
-
-    $param = 'status=any&limit=250';
-    if( $last_day != '' ) $param .= '&processed_at_min=' . $last_day ;
-    $action = 'orders.json?' . $param;
-
-    // Retrive Data from Shop
-    $orderInfo = $this->Shopify_model->accessAPI( $action );
-
-    if($orderInfo != null){
-        foreach( $orderInfo->orders as $order )
-        {
-          $this->Process_model->order_create( $order, $this->_arrStoreList[$shop] );
-        }
-    }
-
-    echo 'success';
-  }
+  // public function sync( $shop )
+  // {
+  //   $this->load->model( 'Process_model' );
+  //
+  //   if(empty($shop))
+  //       $shop = $this->_default_store;
+  //
+  //   $this->load->model( 'Shopify_model' );
+  //   $this->Shopify_model->setStore( $shop, $this->_arrStoreList[$shop]->app_id, $this->_arrStoreList[$shop]->app_secret );
+  //
+	// //var_dump(123);exit;
+  //
+  //   // Get the lastest day
+  //   $this->Order_model->rewriteParam( $shop );
+  //   $last_day = $this->Order_model->getLastOrderDate();
+  //
+  //   $last_day = str_replace(' ', 'T', $last_day);
+  //
+  //   $param = 'status=any&limit=250';
+  //   if( $last_day != '' ) $param .= '&processed_at_min=' . $last_day ;
+  //   $action = 'orders.json?' . $param;
+  //
+  //   // Retrive Data from Shop
+  //   $orderInfo = $this->Shopify_model->accessAPI( $action );
+  //
+  //   if($orderInfo != null){
+  //       foreach( $orderInfo->orders as $order )
+  //       {
+  //         $this->Process_model->order_create( $order, $this->_arrStoreList[$shop] );
+  //       }
+  //   }
+  //
+  //   echo 'success';
+  // }
 }
