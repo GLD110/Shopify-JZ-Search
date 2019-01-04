@@ -21,23 +21,23 @@ class Order extends MY_Controller {
     $this->_searchSession = 'order_sels';
   }
 
-  private function _checkDispatchCode( $code1, $code2 )
-  {
-    // if the first code is empty or both are same, return code2
-    if( $code1 == '' || $code1 == $code2 ) return $code2;
-
-    // If the second code is empty, return code1
-    if( $code2 == '' ) return $code1;
-
-    $arrRule = array( 'HH', 'YH', 'GM', 'SU', 'SF', 'FR', 'AP', 'JM', 'AO', 'AJ', 'NO' );
-
-    $pos1 = array_search( $code1, $arrRule );
-    $pos2 = array_search( $code2, $arrRule );
-
-    if( $pos2 !== false && $pos1 < $pos2 ) return $code1;
-
-    return $code2;
-  }
+  // private function _checkDispatchCode( $code1, $code2 )
+  // {
+  //   // if the first code is empty or both are same, return code2
+  //   if( $code1 == '' || $code1 == $code2 ) return $code2;
+  //
+  //   // If the second code is empty, return code1
+  //   if( $code2 == '' ) return $code1;
+  //
+  //   $arrRule = array( 'HH', 'YH', 'GM', 'SU', 'SF', 'FR', 'AP', 'JM', 'AO', 'AJ', 'NO' );
+  //
+  //   $pos1 = array_search( $code1, $arrRule );
+  //   $pos2 = array_search( $code2, $arrRule );
+  //
+  //   if( $pos2 !== false && $pos1 < $pos2 ) return $code1;
+  //
+  //   return $code2;
+  // }
 
   public function index(){
       $this->is_logged_in();
