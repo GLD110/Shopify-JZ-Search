@@ -216,79 +216,79 @@ class Product extends MY_Controller {
     echo json_encode( $make_arr );
   }
 
-  public function get_MMY(){
-
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Methods: GET, POST");
-    header('Content-Type: application/json');
-
-    if( isset( $_POST[ "make" ] ) && !(isset( $_POST[ "model" ] )) ){
-      $arrCondition =  array(
-        'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
-        'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ]))
-      );
-
-      // Get data
-      $temp =  $this->Product_model->getList( $arrCondition );
-      $product_list = $temp->result();
-
-      //Model List
-      $model_arr = array();
-      $model_arr[0] = '';
-      $temp_arr =  $this->Model_model->getList();
-      $temp_arr = $temp_arr->result();
-      foreach( $temp_arr as $model ) {
-        foreach($product_list as $product){
-          $model_s = trim(preg_replace('/\s\s+/', ' ', $model->prefix));
-          if(strpos($product->tags, $model_s))
-            $model_arr[ $model->id ] = $model->prefix;
-        }
-      }
-      echo json_encode($model_arr);
-    }
-
-    if( isset( $_POST[ "model" ] ) && !(isset( $_POST[ "year" ] ))){
-      $arrCondition =  array(
-        'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
-        'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ])),
-        'model' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "model" ])),
-      );
-
-      // Get data
-      $temp =  $this->Product_model->getList( $arrCondition );
-      $product_list = $temp->result();
-
-      //year List
-      $year_arr = array();
-      $year_arr[0] = '';
-      $temp_arr =  $this->Year_model->getList();
-      $temp_arr = $temp_arr->result();
-
-      foreach( $temp_arr as $year ) {
-        foreach($product_list as $product){
-          $year_s = trim(preg_replace('/\s\s+/', ' ', $year->prefix));
-          if(strpos($product->tags, $year_s))
-            $year_arr[ $year->id ] = $year->prefix;
-        }
-      }
-      echo json_encode($year_arr);
-    }
-
-    if( isset( $_POST[ "year" ] ) ){
-      $arrCondition =  array(
-        'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
-        'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ])),
-        'model' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "model" ])),
-        'year' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "year" ])),
-      );
-
-      // Get data
-      $temp =  $this->Product_model->getList( $arrCondition );
-      $product_list = $temp->result();
-
-      echo json_encode($product_list);
-    }
-  }
+  // public function get_MMY(){
+  //
+  //   header("Access-Control-Allow-Origin: *");
+  //   header("Access-Control-Allow-Methods: GET, POST");
+  //   header('Content-Type: application/json');
+  //
+  //   if( isset( $_POST[ "make" ] ) && !(isset( $_POST[ "model" ] )) ){
+  //     $arrCondition =  array(
+  //       'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
+  //       'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ]))
+  //     );
+  //
+  //     // Get data
+  //     $temp =  $this->Product_model->getList( $arrCondition );
+  //     $product_list = $temp->result();
+  //
+  //     //Model List
+  //     $model_arr = array();
+  //     $model_arr[0] = '';
+  //     $temp_arr =  $this->Model_model->getList();
+  //     $temp_arr = $temp_arr->result();
+  //     foreach( $temp_arr as $model ) {
+  //       foreach($product_list as $product){
+  //         $model_s = trim(preg_replace('/\s\s+/', ' ', $model->prefix));
+  //         if(strpos($product->tags, $model_s))
+  //           $model_arr[ $model->id ] = $model->prefix;
+  //       }
+  //     }
+  //     echo json_encode($model_arr);
+  //   }
+  //
+  //   if( isset( $_POST[ "model" ] ) && !(isset( $_POST[ "year" ] ))){
+  //     $arrCondition =  array(
+  //       'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
+  //       'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ])),
+  //       'model' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "model" ])),
+  //     );
+  //
+  //     // Get data
+  //     $temp =  $this->Product_model->getList( $arrCondition );
+  //     $product_list = $temp->result();
+  //
+  //     //year List
+  //     $year_arr = array();
+  //     $year_arr[0] = '';
+  //     $temp_arr =  $this->Year_model->getList();
+  //     $temp_arr = $temp_arr->result();
+  //
+  //     foreach( $temp_arr as $year ) {
+  //       foreach($product_list as $product){
+  //         $year_s = trim(preg_replace('/\s\s+/', ' ', $year->prefix));
+  //         if(strpos($product->tags, $year_s))
+  //           $year_arr[ $year->id ] = $year->prefix;
+  //       }
+  //     }
+  //     echo json_encode($year_arr);
+  //   }
+  //
+  //   if( isset( $_POST[ "year" ] ) ){
+  //     $arrCondition =  array(
+  //       'shop' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "shop" ])),
+  //       'make' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "make" ])),
+  //       'model' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "model" ])),
+  //       'year' => trim(preg_replace('/\s\s+/', ' ', $_POST[ "year" ])),
+  //     );
+  //
+  //     // Get data
+  //     $temp =  $this->Product_model->getList( $arrCondition );
+  //     $product_list = $temp->result();
+  //
+  //     echo json_encode($product_list);
+  //   }
+  // }
 
   function manageMake(){
       // Check the login
