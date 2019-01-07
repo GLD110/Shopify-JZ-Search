@@ -201,20 +201,20 @@ class Product extends MY_Controller {
       echo $page . '_' . $count;
   }
 
-  public function get_Make(){
-
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Methods: GET, POST");
-    header('Content-Type: application/json');
-
-    //Make List
-    $make_arr = array();
-    $make_arr[0] = '';
-    $temp_arr =  $this->Make_model->getList();
-    $temp_arr = $temp_arr->result();
-    foreach( $temp_arr as $make ) $make_arr[ $make->id ] = $make->prefix;
-    echo json_encode( $make_arr );
-  }
+  // public function get_Make(){
+  //
+  //   header("Access-Control-Allow-Origin: *");
+  //   header("Access-Control-Allow-Methods: GET, POST");
+  //   header('Content-Type: application/json');
+  //
+  //   //Make List
+  //   $make_arr = array();
+  //   $make_arr[0] = '';
+  //   $temp_arr =  $this->Make_model->getList();
+  //   $temp_arr = $temp_arr->result();
+  //   foreach( $temp_arr as $make ) $make_arr[ $make->id ] = $make->prefix;
+  //   echo json_encode( $make_arr );
+  // }
 
   public function get_MMY(){
 
