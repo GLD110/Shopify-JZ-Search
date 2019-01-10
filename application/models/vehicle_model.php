@@ -20,20 +20,20 @@ class Vehicle_model extends Master_model
         return $query;
     }
 
-    // public function getVehicles($arrCondition)
-    // {
-    //     $sql = 'SELECT DISTINCT `model` FROM `' . $this->_tablename . '` WHERE `make` = "' . $arrCondition['make'] . '"';
-    //
-    //     if(isset($arrCondition['model'])){
-    //       $sql = 'SELECT * FROM `' . $this->_tablename . '` WHERE `make` = "' . $arrCondition['make'] . '"';
-    //       $sql = $sql . ' AND `model` = "' . $arrCondition['model'] . '"';
-    //     }
-    //     if(isset($arrCondition['year']))
-    //       $sql = $sql . ' AND ((`start_year` < "' . $arrCondition['year'] . '" AND `end_year` > "' . $arrCondition['year'] . '") OR (`start_year` = "' . $arrCondition['year'] .'") OR (`end_year` = "' . $arrCondition['year'] .'"))';
-    //
-    //     $query = $this->db->query($sql);
-    //     return $query;
-    // }
+    public function getVehicles($arrCondition)
+    {
+        $sql = 'SELECT DISTINCT `model` FROM `' . $this->_tablename . '` WHERE `make` = "' . $arrCondition['make'] . '"';
+
+        if(isset($arrCondition['model'])){
+          $sql = 'SELECT * FROM `' . $this->_tablename . '` WHERE `make` = "' . $arrCondition['make'] . '"';
+          $sql = $sql . ' AND `model` = "' . $arrCondition['model'] . '"';
+        }
+        if(isset($arrCondition['year']))
+          $sql = $sql . ' AND ((`start_year` < "' . $arrCondition['year'] . '" AND `end_year` > "' . $arrCondition['year'] . '") OR (`start_year` = "' . $arrCondition['year'] .'") OR (`end_year` = "' . $arrCondition['year'] .'"))';
+
+        $query = $this->db->query($sql);
+        return $query;
+    }
 
     function importCSV(array $csv)
     {
