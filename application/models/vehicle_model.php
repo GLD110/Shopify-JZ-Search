@@ -60,47 +60,47 @@ class Vehicle_model extends Master_model
       }
     }
 
-    // function createVehicle(){
-    //     $make = $this->input->post('sel_make');
-    //     $sql = 'SELECT `prefix` FROM ' . 'make' . ' WHERE `id` = ' . $make;
-    //     $query = $this->db->query($sql);
-    //     $temp = $query->result();
-    //     $make = $temp[0]->prefix;
-    //
-    //     $model = $this->input->post('sel_model');
-    //     $sql = 'SELECT `prefix` FROM ' . 'model' . ' WHERE `id` = ' . $model;
-    //     $query = $this->db->query($sql);
-    //     $temp = $query->result();
-    //     $model = $temp[0]->prefix;
-    //
-    //     $start_year = $this->input->post('start_year');
-    //     $end_year = $this->input->post('end_year');
-    //     $bolt_pattern_cm = $this->input->post('bolt_pattern_cm');
-    //     $oem_tire_size = $this->input->post('oem_tire_size');
-    //     $oem_wheel_size = $this->input->post('oem_wheel_size');
-    //     $plus_tire_size = $this->input->post('plus_tire_size');
-    //     $plus_wheel_size = $this->input->post('plus_wheel_size');
-    //
-    //     $data = array(
-    //       'make'=>$make,
-    //       'model'=>$model,
-    //       'start_year'=>$start_year,
-    //       'end_year'=>$end_year,
-    //       'bolt_pattern_cm'=>$bolt_pattern_cm,
-    //       'oem_tire_size'=>$oem_tire_size,
-    //       'oem_wheel_size'=>$oem_wheel_size,
-    //       'plus_tire_size'=>$plus_tire_size,
-    //       'plus_wheel_size'=>$plus_wheel_size,
-    //       'shop'=>$this->_shop,
-    //     );
-    //
-    //     $this->db->insert( $this->_tablename, $data);
-    //     if($this->db->affected_rows()>0){
-    //         return true;
-    //     }
-    //     else{
-    //         return FALSE;
-    //     }
-    // }
+    function createVehicle(){
+        $make = $this->input->post('sel_make');
+        $sql = 'SELECT `prefix` FROM ' . 'make' . ' WHERE `id` = ' . $make;
+        $query = $this->db->query($sql);
+        $temp = $query->result();
+        $make = $temp[0]->prefix;
+
+        $model = $this->input->post('sel_model');
+        $sql = 'SELECT `prefix` FROM ' . 'model' . ' WHERE `id` = ' . $model;
+        $query = $this->db->query($sql);
+        $temp = $query->result();
+        $model = $temp[0]->prefix;
+
+        $start_year = $this->input->post('start_year');
+        $end_year = $this->input->post('end_year');
+        $bolt_pattern_cm = $this->input->post('bolt_pattern_cm');
+        $oem_tire_size = $this->input->post('oem_tire_size');
+        $oem_wheel_size = $this->input->post('oem_wheel_size');
+        $plus_tire_size = $this->input->post('plus_tire_size');
+        $plus_wheel_size = $this->input->post('plus_wheel_size');
+
+        $data = array(
+          'make'=>$make,
+          'model'=>$model,
+          'start_year'=>$start_year,
+          'end_year'=>$end_year,
+          'bolt_pattern_cm'=>$bolt_pattern_cm,
+          'oem_tire_size'=>$oem_tire_size,
+          'oem_wheel_size'=>$oem_wheel_size,
+          'plus_tire_size'=>$plus_tire_size,
+          'plus_wheel_size'=>$plus_wheel_size,
+          'shop'=>$this->_shop,
+        );
+
+        $this->db->insert( $this->_tablename, $data);
+        if($this->db->affected_rows()>0){
+            return true;
+        }
+        else{
+            return FALSE;
+        }
+    }
 }
 ?>
