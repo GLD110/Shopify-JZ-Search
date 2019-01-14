@@ -35,30 +35,30 @@ class Vehicle_model extends Master_model
         return $query;
     }
 
-    // function importCSV(array $csv)
-    // {
-    //   foreach($csv as $vehicle){
-    //     $data = array(
-    //         'make'=>$vehicle['make'],
-    //         'model'=>$vehicle['model'],
-    //         'start_year'=>$vehicle['start_year'],
-    //         'end_year'=>$vehicle['end_year'],
-    //         'bolt_pattern_cm'=>$vehicle['bolt_pattern_cm'],
-    //         'oem_tire_size'=>$vehicle['oem_tire_size'],
-    //         'oem_wheel_size'=>$vehicle['oem_wheel_size'],
-    //         'plus_tire_size'=>$vehicle['plus_tire_size'],
-    //         'plus_wheel_size'=>$vehicle['plus_wheel_size'],
-    //         'shop'=>$this->_shop,
-    //     );
-    //     $this->db->insert( $this->_tablename, $data);
-    //   }
-    //   if($this->db->affected_rows()>0){
-    //       return true;
-    //   }
-    //   else{
-    //       return FALSE;
-    //   }
-    // }
+    function importCSV(array $csv)
+    {
+      foreach($csv as $vehicle){
+        $data = array(
+            'make'=>$vehicle['make'],
+            'model'=>$vehicle['model'],
+            'start_year'=>$vehicle['start_year'],
+            'end_year'=>$vehicle['end_year'],
+            'bolt_pattern_cm'=>$vehicle['bolt_pattern_cm'],
+            'oem_tire_size'=>$vehicle['oem_tire_size'],
+            'oem_wheel_size'=>$vehicle['oem_wheel_size'],
+            'plus_tire_size'=>$vehicle['plus_tire_size'],
+            'plus_wheel_size'=>$vehicle['plus_wheel_size'],
+            'shop'=>$this->_shop,
+        );
+        $this->db->insert( $this->_tablename, $data);
+      }
+      if($this->db->affected_rows()>0){
+          return true;
+      }
+      else{
+          return FALSE;
+      }
+    }
 
     function createVehicle(){
         $make = $this->input->post('sel_make');
