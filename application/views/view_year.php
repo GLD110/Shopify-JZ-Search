@@ -82,7 +82,7 @@
   </div><!-- /.row -->
 </section><!-- /.content -->
 
-<!-- <form method="POST" id='delyear' action="<?php echo base_url( $this->config->item('index_page') . '/product/delYear' ) ?>" >
+<form method="POST" id='delyear' action="<?php echo base_url( $this->config->item('index_page') . '/product/delYear' ) ?>" >
     <input type="hidden" id = 'del_id' name="del_id" value=""/>
 </form>
 
@@ -128,7 +128,7 @@
                         <button id="cancle" name="cancle" class="btn btn-warning" data-dismiss="modal" aria-hidden="true">Cancel</button>
                     </div>
 
-                </form> -->
+                </form>
             </div>
 
         </div>
