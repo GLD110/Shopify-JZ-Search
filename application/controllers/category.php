@@ -70,41 +70,41 @@ class Category extends MY_Controller {
         $this->Category_model->update( $pk, $data );
     }
 
-    // function upload( $pk )
-    // {
-    //     // Get the Category object
-    //     $objCategory = $this->Category_model->getInfo( $pk );
-    //
-    //     // Load the file upload library
-    //     $config['upload_path'] = './' . $this->config->item( 'CONST_UPLOAD_FOLDER' ) . '/';
-    //     $config['allowed_types'] = 'gif|jpg|png';
-    //     $config['max_size']    = '20480';
-    //
-    //     $this->load->library('upload', $config);
-    //
-    //     if ( $this->upload->do_upload( 'file_image_' . $pk ))
-    //     {
-    //         $upload_data = $this->upload->data();
-    //
-    //         // Delete the file
-    //         if( $objCategory->image_url != '' )
-    //         {
-    //             unlink( $upload_data['file_path'] . $objCategory->image_url );
-    //         }
-    //
-    //         // Update the filename
-    //         $new_filename = 'category_' . $pk . $upload_data['file_ext'];
-    //         rename( $upload_data['full_path'], $upload_data['file_path'] . $new_filename );
-    //
-    //
-    //         // Define the update data
-    //         $update_data = array(
-    //             'image_url' => $new_filename,
-    //         );
-    //
-    //         $this->Category_model->update( $pk, $update_data );
-    //     }
-    //
-    //     $this->manage();
-    // }
+    function upload( $pk )
+    {
+        // Get the Category object
+        $objCategory = $this->Category_model->getInfo( $pk );
+
+        // Load the file upload library
+        $config['upload_path'] = './' . $this->config->item( 'CONST_UPLOAD_FOLDER' ) . '/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size']    = '20480';
+
+        $this->load->library('upload', $config);
+
+        if ( $this->upload->do_upload( 'file_image_' . $pk ))
+        {
+            $upload_data = $this->upload->data();
+
+            // Delete the file
+            if( $objCategory->image_url != '' )
+            {
+                unlink( $upload_data['file_path'] . $objCategory->image_url );
+            }
+
+            // Update the filename
+            $new_filename = 'category_' . $pk . $upload_data['file_ext'];
+            rename( $upload_data['full_path'], $upload_data['file_path'] . $new_filename );
+
+
+            // Define the update data
+            $update_data = array(
+                'image_url' => $new_filename,
+            );
+
+            $this->Category_model->update( $pk, $update_data );
+        }
+
+        $this->manage();
+    }
 }
