@@ -58,17 +58,17 @@ class Category extends MY_Controller {
         }
     }
 
-    // function update( $type, $pk ){
-    //     $data = array();
-    //
-    //     switch( $type )
-    //     {
-    //         case 'code' : $data['code'] = strtolower( str_replace( array( ' ', ',' ), '_', $this->input->post('value') ) ); break;
-    //         case 'name' : $data['name'] = $this->input->post('value'); break;
-    //         case 'sort_order' : $data['sort_order'] = str_replace( ',', '.', $this->input->post('value') ); break;
-    //     }
-    //     $this->Category_model->update( $pk, $data );
-    // }
+    function update( $type, $pk ){
+        $data = array();
+
+        switch( $type )
+        {
+            case 'code' : $data['code'] = strtolower( str_replace( array( ' ', ',' ), '_', $this->input->post('value') ) ); break;
+            case 'name' : $data['name'] = $this->input->post('value'); break;
+            case 'sort_order' : $data['sort_order'] = str_replace( ',', '.', $this->input->post('value') ); break;
+        }
+        $this->Category_model->update( $pk, $data );
+    }
 
     function upload( $pk )
     {
