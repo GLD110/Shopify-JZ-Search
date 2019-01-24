@@ -24,19 +24,19 @@ class Category extends MY_Controller {
         $this->load->view('view_footer');
     }
 
-    // function del(){
-    //     $id = $this->input->get_post('del_id');
-    //     $returnDelete = $this->Category_model->delete( $id );
-    //     if( $returnDelete === true ){
-    //         $this->session->set_flashdata('falsh', '<p class="alert alert-success">One Category is deleted successfully</p>');
-    //     }
-    //     else{
-    //         $this->session->set_flashdata('falsh', '<p class="alert alert-danger">Sorry! Category unsuccessfully : ' . $returnDelete . '</p>');
-    //     }
-    //
-    //     redirect('category');
-    //     exit;
-    // }
+    function del(){
+        $id = $this->input->get_post('del_id');
+        $returnDelete = $this->Category_model->delete( $id );
+        if( $returnDelete === true ){
+            $this->session->set_flashdata('falsh', '<p class="alert alert-success">One Category is deleted successfully</p>');
+        }
+        else{
+            $this->session->set_flashdata('falsh', '<p class="alert alert-danger">Sorry! Category unsuccessfully : ' . $returnDelete . '</p>');
+        }
+
+        redirect('category');
+        exit;
+    }
 
     function add(){
         $this->form_validation->set_rules('code', 'Category Code', 'required');
