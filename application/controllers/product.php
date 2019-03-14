@@ -29,107 +29,107 @@ class Product extends MY_Controller {
     $this->manage();
   }
 
-  // public function manage( $page =  0 ){
-  //   // Check the login
-  //   $this->is_logged_in();
-  //
-  //   // Init the search value
-  //   $this->initSearchValue();
-  //
-  //   // Get data
-  //   $this->Product_model->rewriteParam($this->_searchVal['shop']);
-  //   $arrCondition =  array(
-  //     'name' => $this->_searchVal['name'],
-  //     'make' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['make'])),
-  //     'model' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['model'])),
-  //     'year' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['year'])),
-  //     'sort' => $this->_searchVal['sort_field'] . ' ' . $this->_searchVal['sort_direction'],
-  //     'page_number' => $page,
-  //     'page_size' => $this->_searchVal['page_size'],
-  //   );
-  //
-  //   //var_dump($this->_searchVal['model']);exit;
-  //
-  //   $data['query'] =  $this->Product_model->getList( $arrCondition );
-  //   $data['total_count'] = $this->Product_model->getTotalCount();
-  //   $data['page'] = $page;
-  //
-  //   // Store List
-  //   $arr = array();
-  //   foreach( $this->_arrStoreList as $shop => $row ) $arr[ $shop ] = $shop;
-  //   $data['arrStoreList'] = $arr;
-  //
-  //   //Make List
-  //   $make_arr = array();
-  //   $make_arr[0] = '';
-  //   $temp_arr =  $this->Make_model->getList();
-  //   $temp_arr = $temp_arr->result();
-  //   foreach( $temp_arr as $make ) $make_arr[ $make->id ] = $make->prefix;
-  //   $data['make_arr'] = $make_arr;
-  //
-  //   $arrCondition2 =  array(
-  //     'name' => $this->_searchVal['name'],
-  //     'make' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['make']))
-  //   );
-  //
-  //   // Get data
-  //   $temp =  $this->Product_model->getList( $arrCondition2 );
-  //   $product_list = $temp->result();
-  //
-  //   //model List
-  //   $model_arr = array();
-  //   $model_arr[0] = '';
-  //   $temp_arr =  $this->Model_model->getList();
-  //   $temp_arr = $temp_arr->result();
-  //
-  //   foreach( $temp_arr as $model ) {
-  //     foreach($product_list as $product){
-  //       $model_s = trim(preg_replace('/\s\s+/', ' ', $model->prefix));
-  //       if(strpos($product->tags, $model_s))
-  //         $model_arr[ $model->id ] = $model->prefix;
-  //     }
-  //   }
-  //
-  //   //year List
-  //   $year_arr = array();
-  //   $year_arr[0] = '';
-  //   $temp_arr =  $this->Year_model->getList();
-  //   $temp_arr = $temp_arr->result();
-  //
-  //   foreach( $temp_arr as $year ) {
-  //     foreach($product_list as $product){
-  //       $year_s = trim(preg_replace('/\s\s+/', ' ', $year->prefix));
-  //       if(strpos($product->tags, $year_s))
-  //         $year_arr[ $year->id ] = $year->prefix;
-  //     }
-  //   }
-  //
-  //   //Model List
-  //   /*$model_arr = array();
-  //   $model_arr[0] = '';
-  //   $temp_arr =  $this->Model_model->getList();
-  //   $temp_arr = $temp_arr->result();
-  //   foreach( $temp_arr as $model ) $model_arr[ $model->id ] = $model->prefix;*/
-  //   $data['model_arr'] = $model_arr;
-  //
-  //   //Year List
-  //   /* $year_arr = array();
-  //   // $year_arr[0] = '';
-  //   // $temp_arr =  $this->Year_model->getList();
-  //   // $temp_arr = $temp_arr->result();
-  //   // foreach( $temp_arr as $year ) $year_arr[ $year->id ] = $year->prefix;*/
-  //   $data['year_arr'] = $year_arr;
-  //
-  //   // Define the rendering data
-  //   $data = $data + $this->setRenderData();
-  //
-  //   // Load Pagenation
-  //   $this->load->library('pagination');
-  //
-  //   $this->load->view('view_header');
-  //   $this->load->view('view_product', $data );
-  //   $this->load->view('view_footer');
-  // }
+  public function manage( $page =  0 ){
+    // Check the login
+    $this->is_logged_in();
+
+    // Init the search value
+    $this->initSearchValue();
+
+    // Get data
+    $this->Product_model->rewriteParam($this->_searchVal['shop']);
+    $arrCondition =  array(
+      'name' => $this->_searchVal['name'],
+      'make' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['make'])),
+      'model' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['model'])),
+      'year' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['year'])),
+      'sort' => $this->_searchVal['sort_field'] . ' ' . $this->_searchVal['sort_direction'],
+      'page_number' => $page,
+      'page_size' => $this->_searchVal['page_size'],
+    );
+
+    //var_dump($this->_searchVal['model']);exit;
+
+    $data['query'] =  $this->Product_model->getList( $arrCondition );
+    $data['total_count'] = $this->Product_model->getTotalCount();
+    $data['page'] = $page;
+
+    // Store List
+    $arr = array();
+    foreach( $this->_arrStoreList as $shop => $row ) $arr[ $shop ] = $shop;
+    $data['arrStoreList'] = $arr;
+
+    //Make List
+    $make_arr = array();
+    $make_arr[0] = '';
+    $temp_arr =  $this->Make_model->getList();
+    $temp_arr = $temp_arr->result();
+    foreach( $temp_arr as $make ) $make_arr[ $make->id ] = $make->prefix;
+    $data['make_arr'] = $make_arr;
+
+    $arrCondition2 =  array(
+      'name' => $this->_searchVal['name'],
+      'make' => trim(preg_replace('/\s\s+/', ' ', $this->_searchVal['make']))
+    );
+
+    // Get data
+    $temp =  $this->Product_model->getList( $arrCondition2 );
+    $product_list = $temp->result();
+
+    //model List
+    $model_arr = array();
+    $model_arr[0] = '';
+    $temp_arr =  $this->Model_model->getList();
+    $temp_arr = $temp_arr->result();
+
+    foreach( $temp_arr as $model ) {
+      foreach($product_list as $product){
+        $model_s = trim(preg_replace('/\s\s+/', ' ', $model->prefix));
+        if(strpos($product->tags, $model_s))
+          $model_arr[ $model->id ] = $model->prefix;
+      }
+    }
+
+    //year List
+    $year_arr = array();
+    $year_arr[0] = '';
+    $temp_arr =  $this->Year_model->getList();
+    $temp_arr = $temp_arr->result();
+
+    foreach( $temp_arr as $year ) {
+      foreach($product_list as $product){
+        $year_s = trim(preg_replace('/\s\s+/', ' ', $year->prefix));
+        if(strpos($product->tags, $year_s))
+          $year_arr[ $year->id ] = $year->prefix;
+      }
+    }
+
+    //Model List
+    /*$model_arr = array();
+    $model_arr[0] = '';
+    $temp_arr =  $this->Model_model->getList();
+    $temp_arr = $temp_arr->result();
+    foreach( $temp_arr as $model ) $model_arr[ $model->id ] = $model->prefix;*/
+    $data['model_arr'] = $model_arr;
+
+    //Year List
+    /* $year_arr = array();
+    // $year_arr[0] = '';
+    // $temp_arr =  $this->Year_model->getList();
+    // $temp_arr = $temp_arr->result();
+    // foreach( $temp_arr as $year ) $year_arr[ $year->id ] = $year->prefix;*/
+    $data['year_arr'] = $year_arr;
+
+    // Define the rendering data
+    $data = $data + $this->setRenderData();
+
+    // Load Pagenation
+    $this->load->library('pagination');
+
+    $this->load->view('view_header');
+    $this->load->view('view_product', $data );
+    $this->load->view('view_footer');
+  }
 
   public function update( $type, $pk )
   {
