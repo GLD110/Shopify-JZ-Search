@@ -304,23 +304,23 @@ class Product extends MY_Controller {
       }
   }
 
-  // function delMake(){
-  //     if($this->session->userdata('role') == 'admin'){
-  //         $id = $this->input->get_post('del_id');
-  //         $returnDelete = $this->Make_model->delete( $id );
-  //         if( $returnDelete === true ){
-  //             $this->session->set_flashdata('falsh', '<p class="alert alert-success">One item deleted successfully</p>');
-  //         }
-  //         else{
-  //             $this->session->set_flashdata('falsh', '<p class="alert alert-danger">Sorry! deleted unsuccessfully : ' . $returnDelete . '</p>');
-  //         }
-  //     }
-  //     else{
-  //         $this->session->set_flashdata('falsh', '<p class="alert alert-danger">Sorry! You have no rights to deltete</p>');
-  //     }
-  //     redirect('product/manageMake');
-  //     exit;
-  // }
+  function delMake(){
+      if($this->session->userdata('role') == 'admin'){
+          $id = $this->input->get_post('del_id');
+          $returnDelete = $this->Make_model->delete( $id );
+          if( $returnDelete === true ){
+              $this->session->set_flashdata('falsh', '<p class="alert alert-success">One item deleted successfully</p>');
+          }
+          else{
+              $this->session->set_flashdata('falsh', '<p class="alert alert-danger">Sorry! deleted unsuccessfully : ' . $returnDelete . '</p>');
+          }
+      }
+      else{
+          $this->session->set_flashdata('falsh', '<p class="alert alert-danger">Sorry! You have no rights to deltete</p>');
+      }
+      redirect('product/manageMake');
+      exit;
+  }
 
   function createMake(){
      if($this->session->userdata('role') == 'admin'){
